@@ -75,7 +75,10 @@ const Map = () => {
         if (!floridaRef.current) return;
 
         const map = event.target._map;
-        map.flyTo([27.8, -83.5], 7);
+        map.flyTo([27.8, -83.5], 7, {
+          duration: 1.5,
+          easeLinearity: 0.2,
+        });
 
         floridaRef.current.clearLayers().addData(florida);
         setCurrentState("florida");
@@ -91,7 +94,10 @@ const Map = () => {
         setCurrentState("georgia");
 
         const map = event.target._map;
-        map.flyTo([32.7, -83.2], 7);
+        map.flyTo([32.7, -83.2], 7, {
+          duration: 1.5,
+          easeLinearity: 0.2,
+        });
 
         georgiaRef.current.clearLayers().addData(georgia);
       },
@@ -106,14 +112,54 @@ const Map = () => {
         setCurrentState("pennsylvania");
 
         const map = event.target._map;
-        map.flyTo([41.203323, -77.194527], 7);
+        map.flyTo([41.203323, -77.194527], 7, {
+          duration: 1.5,
+          easeLinearity: 0.2,
+        });
         pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
       },
     });
   };
 
+  const handleStateChange = (event) => {
+    const state = event.target.value;
+    setCurrentState(state);
+
+    if (state === "florida") {
+      const map = floridaRef.current.getLayers()[0]._map;
+      map.flyTo([27.8, -83.5], 7, {
+        duration: 1.5,
+        easeLinearity: 0.2,
+      });
+      floridaRef.current.clearLayers().addData(florida);
+    }
+
+    if (state === "georgia") {
+      const map = georgiaRef.current.getLayers()[0]._map;
+      map.flyTo([32.7, -83.2], 7, {
+        duration: 1.5,
+        easeLinearity: 0.2,
+      });
+      georgiaRef.current.clearLayers().addData(georgia);
+    }
+
+    if (state === "pennsylvania") {
+      const map = pennsylvaniaRef.current.getLayers()[0]._map;
+      map.flyTo([41.203323, -77.194527], 7, {
+        duration: 1.5,
+        easeLinearity: 0.2,
+      });
+      pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+    }
+  };
+
   return (
-    <MapContainer center={[38.5, -96]} zoom={5} style={{ height: "100vh" }}>
+    <MapContainer
+      className="map-container"
+      center={[35, -81]}
+      zoom={5}
+      style={{ height: "100vh" }}
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         style={{ border: "none" }}
@@ -137,6 +183,22 @@ const Map = () => {
         style={pennsylvaniaOptions.style}
         onEachFeature={handlePennsylvaniaClicked}
       />
+
+      <select
+        onChange={handleStateChange}
+        value={currentState}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          zIndex: "1000",
+        }}
+      >
+        <option value="">Select a state</option>
+        <option value="florida">Florida</option>
+        <option value="georgia">Georgia</option>
+        <option value="pennsylvania">Pennsylvania</option>
+      </select>
     </MapContainer>
   );
 };
