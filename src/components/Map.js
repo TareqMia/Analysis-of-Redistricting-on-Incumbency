@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import L from "leaflet";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import { useMapEvents } from "https://cdn.esm.sh/react-leaflet/hooks";
 
 import floridaOutline from "../json/fl-state_outline.json";
 import georgiaOutline from "../json/ge-state_outline.json";
@@ -13,7 +11,26 @@ import pennsylvania from "../json/pennsylvania.json";
 
 const Map = () => {
   const [currentState, setCurrentState] = useState("");
-  const geoJsonRef = useRef();
+  const floridaRef = useRef();
+  const georgiaRef = useRef();
+  const pennsylvaniaRef = useRef();
+
+  useEffect(() => {
+    if (currentState === "florida") {
+      georgiaRef.current.clearLayers().addData(georgiaOutline);
+      pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
+    }
+
+    if (currentState === "georgia") {
+      floridaRef.current.clearLayers().addData(floridaOutline);
+      pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
+    }
+
+    if (currentState === "pennsylvania") {
+      floridaRef.current.clearLayers().addData(floridaOutline);
+      georgiaRef.current.clearLayers().addData(georgiaOutline);
+    }
+  }, [currentState]);
 
   const tileLayerOptions = {
     detectRetina: true,
@@ -55,16 +72,13 @@ const Map = () => {
   const handleFloridaClicked = (feature, layer) => {
     layer.on({
       click: (event) => {
-        if (!geoJsonRef.current) return;
+        if (!floridaRef.current) return;
 
         const map = event.target._map;
-        map.setView([27.8, -83.5], 7);
+        map.flyTo([27.8, -83.5], 7);
 
-        geoJsonRef.current.clearLayers();
-        geoJsonRef.current.addData(florida);
+        floridaRef.current.clearLayers().addData(florida);
         setCurrentState("florida");
-
-        console.log(currentState);
       },
     });
   };
@@ -72,10 +86,14 @@ const Map = () => {
   const handleGeorgiaClicked = (feature, layer) => {
     layer.on({
       click: (event) => {
+        if (!georgiaRef.current) return;
+
         setCurrentState("georgia");
+
         const map = event.target._map;
-        map.setView([32.7, -83.2], 7);
-        console.log(currentState);
+        map.flyTo([32.7, -83.2], 7);
+
+        georgiaRef.current.clearLayers().addData(georgia);
       },
     });
   };
@@ -83,13 +101,17 @@ const Map = () => {
   const handlePennsylvaniaClicked = (feature, layer) => {
     layer.on({
       click: (event) => {
+        if (!pennsylvaniaRef) return;
+
+        setCurrentState("pennsylvania");
+
         const map = event.target._map;
-        map.setView([41.203323, -77.194527], 7);
+        map.flyTo([41.203323, -77.194527], 7);
+        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
       },
     });
   };
 
-  console.log(currentState);
   return (
     <MapContainer center={[38.5, -96]} zoom={5} style={{ height: "100vh" }}>
       <TileLayer
@@ -98,17 +120,19 @@ const Map = () => {
         {...tileLayerOptions}
       />
       <GeoJSON
-        ref={geoJsonRef}
+        ref={floridaRef}
         data={floridaOutline}
         {...floridaOptions}
         onEachFeature={handleFloridaClicked}
       />
       <GeoJSON
+        ref={georgiaRef}
         data={georgiaOutline}
         {...georgiaOptions}
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
+        ref={pennsylvaniaRef}
         data={pennsylvaniaOutline}
         style={pennsylvaniaOptions.style}
         onEachFeature={handlePennsylvaniaClicked}
