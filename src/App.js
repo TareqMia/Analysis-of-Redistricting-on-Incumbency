@@ -1,13 +1,15 @@
+import React, { useState } from "react";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
 
-function App() {
+const App = () => {
+  const [currentState, setCurrentState] = useState("");
   return (
     <div className="App">
-      <Map />
+      <Map currentState={currentState} setCurrentState={setCurrentState} />
     </div>
   );
-}
+};
 
 export default App;

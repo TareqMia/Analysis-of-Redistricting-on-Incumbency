@@ -9,8 +9,7 @@ import florida from "../json/florida.json";
 import georgia from "../json/georgia.json";
 import pennsylvania from "../json/pennsylvania.json";
 
-const Map = () => {
-  const [currentState, setCurrentState] = useState("");
+const Map = ({ currentState, setCurrentState }) => {
   const floridaRef = useRef();
   const georgiaRef = useRef();
   const pennsylvaniaRef = useRef();
@@ -170,6 +169,17 @@ const Map = () => {
         data={floridaOutline}
         {...floridaOptions}
         onEachFeature={handleFloridaClicked}
+        // style={(feature) => {
+        //   const party = feature.properties.PARTY;
+        //   console.log(feature);
+        //   return {
+        //     fillColor: party === "REP" ? "red" : "blue",
+        //     weight: 1,
+        //     opacity: 1,
+        //     color: "white",
+        //     fillOpacity: 0.7,
+        //   };
+        // }}
       />
       <GeoJSON
         ref={georgiaRef}
