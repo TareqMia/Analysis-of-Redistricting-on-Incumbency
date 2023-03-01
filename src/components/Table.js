@@ -40,18 +40,18 @@ const Table = ({ currentState }) => {
         </tr>
         {data.map((val, key) => {
           // console.log(val);
-          let color = val.Party === 'DEM' ? 'blue' : 'red';
+          let color = val.Party === "DEM" ? "blue" : "red";
           console.log(color);
           return (
             <tr key={key}>
               <td>{val.Candidate}</td>
-              <td style={{color: color}}>{val.Party}</td>
-              <td>{val['Primary Outcome']}</td>
+              <td style={{ color: color }}>{val.Party}</td>
+              <td>{val["Primary Outcome"]}</td>
               <td>{val.District}</td>
               <td>{val.State}</td>
               <td>{val.Incumbent}</td>
-              <td>{val['Primary Votes']}</td>
-              <td>{val['Primary %']}</td>
+              <td>{val["Primary Votes"]}</td>
+              <td>{val["Primary %"]}</td>
             </tr>
           );
         })}

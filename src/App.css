@@ -5,11 +5,10 @@
 }
 
 .map-container {
-  width: 50%;
-  height: calc(100vh - 2rem); /* subtract any additional margins or padding */
+  width: 55vw;
+  height: calc(100vh - 5rem); /* subtract any additional margins or padding */
   border-radius: 0.5rem;
   overflow: hidden; /* clip any content that overflows the rounded corners */
-  margin: 5px;
   height: 100%;
 }
 
@@ -19,9 +18,10 @@
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   border: 3px solid #ddd;
-  width: fit-content;
-  height: 200px;
+  width: 45vw;
+  height: 300px;
   overflow: auto;
+  margin: 20px;
 }
 
 .incumbents td,

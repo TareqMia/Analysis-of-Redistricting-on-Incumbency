@@ -9,7 +9,12 @@ import florida from "../json/florida.json";
 import georgia from "../json/georgia.json";
 import pennsylvania from "../json/pennsylvania.json";
 
-const Map = ({ currentState, setCurrentState }) => {
+const Map = ({
+  currentState,
+  setCurrentState,
+  currentDistrict,
+  setCurrentDistrict,
+}) => {
   const floridaRef = useRef();
   const georgiaRef = useRef();
   const pennsylvaniaRef = useRef();
@@ -31,6 +36,9 @@ const Map = ({ currentState, setCurrentState }) => {
           duration: 1.5,
           easeLinearity: 0.2,
         });
+        floridaRef.current.clearLayers().addData(floridaOutline);
+        georgiaRef.current.clearLayers().addData(georgiaOutline);
+        pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
       }
     }
   }, [currentState]);
@@ -45,29 +53,11 @@ const Map = ({ currentState, setCurrentState }) => {
       'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
   };
 
-  const floridaOptions = {
+  const stateOptions = {
     style: {
-      fillColor: "red",
+      fillColor: "grey",
       fillOpacity: 0.5,
-      color: "red",
-      weight: 1,
-    },
-  };
-
-  const georgiaOptions = {
-    style: {
-      fillColor: "purple",
-      fillOpacity: 0.5,
-      color: "purple",
-      weight: 1,
-    },
-  };
-
-  const pennsylvaniaOptions = {
-    style: {
-      fillColor: "blue",
-      fillOpacity: 0.5,
-      color: "blue",
+      color: "black",
       weight: 1,
     },
   };
@@ -75,8 +65,11 @@ const Map = ({ currentState, setCurrentState }) => {
   const handleFloridaClicked = (feature, layer) => {
     layer.on({
       click: (event) => {
-        console.log(feature);
         if (!floridaRef.current) return;
+
+        console.log(feature);
+        if (feature.geometry.type === "Polygon") {
+        }
 
         const map = event.target._map;
         map.flyTo([27.8, -83.5], 7, {
@@ -86,6 +79,11 @@ const Map = ({ currentState, setCurrentState }) => {
 
         floridaRef.current.clearLayers().addData(florida);
         setCurrentState("florida");
+      },
+      mouseover: (event) => {
+        if (currentState) {
+          console.log(feature);
+        }
       },
     });
   };
@@ -177,7 +175,7 @@ const Map = ({ currentState, setCurrentState }) => {
       <GeoJSON
         ref={floridaRef}
         data={floridaOutline}
-        {...floridaOptions}
+        style={stateOptions.style}
         onEachFeature={handleFloridaClicked}
         // style={(feature) => {
         //   const party = feature.properties.PARTY;
@@ -194,13 +192,13 @@ const Map = ({ currentState, setCurrentState }) => {
       <GeoJSON
         ref={georgiaRef}
         data={georgiaOutline}
-        {...georgiaOptions}
+        style={stateOptions.style}
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
         ref={pennsylvaniaRef}
         data={pennsylvaniaOutline}
-        style={pennsylvaniaOptions.style}
+        style={stateOptions.style}
         onEachFeature={handlePennsylvaniaClicked}
       />
 
