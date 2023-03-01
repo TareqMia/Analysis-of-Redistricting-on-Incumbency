@@ -6,14 +6,14 @@ import Table from "./components/Table";
 
 const App = () => {
   const [currentState, setCurrentState] = useState("");
-  const [currentDistrict, settCurrentDistrict] = useState(null);
+  const [currentDistrict, setCurrentDistrict] = useState(null);
   return (
     <div className="App">
       <Map
         currentState={currentState}
         setCurrentState={setCurrentState}
         currentDistrict={currentDistrict}
-        settCurrentDistrict={settCurrentDistrict}
+        setCurrentDistrict={setCurrentDistrict}
       />
       {currentState && (
         <Table currentState={currentState} setCurrentState={setCurrentState} />

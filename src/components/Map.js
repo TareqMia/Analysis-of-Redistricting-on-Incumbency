@@ -41,7 +41,13 @@ const Map = ({
         pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
       }
     }
+    setCurrentDistrict(null);
   }, [currentState]);
+
+  useEffect(() => {
+    if (currentState === "florida") {
+    }
+  }, [currentDistrict]);
 
   const tileLayerOptions = {
     detectRetina: true,
@@ -67,8 +73,8 @@ const Map = ({
       click: (event) => {
         if (!floridaRef.current) return;
 
-        console.log(feature);
         if (feature.geometry.type === "Polygon") {
+          setCurrentDistrict(feature);
         }
 
         const map = event.target._map;
@@ -81,8 +87,8 @@ const Map = ({
         setCurrentState("florida");
       },
       mouseover: (event) => {
-        if (currentState) {
-          console.log(feature);
+        if (currentState === "florida") {
+          console.log("hovering over");
         }
       },
     });
@@ -175,19 +181,24 @@ const Map = ({
       <GeoJSON
         ref={floridaRef}
         data={floridaOutline}
-        style={stateOptions.style}
+        style={
+          (stateOptions.style,
+          (feature) =>
+            feature === currentDistrict
+              ? {
+                  fillColor: "blue",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 2,
+                }
+              : {
+                  fillColor: "grey",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 1,
+                })
+        }
         onEachFeature={handleFloridaClicked}
-        // style={(feature) => {
-        //   const party = feature.properties.PARTY;
-        //   console.log(feature);
-        //   return {
-        //     fillColor: party === "REP" ? "red" : "blue",
-        //     weight: 1,
-        //     opacity: 1,
-        //     color: "white",
-        //     fillOpacity: 0.7,
-        //   };
-        // }}
       />
       <GeoJSON
         ref={georgiaRef}

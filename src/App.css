@@ -14,13 +14,13 @@
 
 .incumbents {
   text-align: center;
-  height: calc(100vh - 1rem); /* subtract any additional margins or padding */
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   border: 3px solid #ddd;
   width: 45vw;
-  height: 300px;
-  overflow: auto;
+  height: min-content;
+  max-height: 500px;
+  overflow: hidden;
   margin: 20px;
 }
 
@@ -44,4 +44,18 @@
   text-align: center;
   background-color: #625f63;
   color: white;
+}
+
+.ui.celled.table {
+  font-size: 12px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.ui.celled.table th {
+  padding: 5px;
+}
+
+.ui.celled.table td {
+  padding: 4px;
 }
