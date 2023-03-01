@@ -9,11 +9,16 @@ import florida from "../json/florida.json";
 import georgia from "../json/georgia.json";
 import pennsylvania from "../json/pennsylvania.json";
 
+import florida_2020 from "../json/2020-district_plans/florida-2020.json";
+import georgia_2020 from "../json/2020-district_plans/georgia-2020.json";
+import pennsylvania_2020 from "../json/2020-district_plans/pennslyvania-2020.json";
+
 const Map = ({
   currentState,
   setCurrentState,
   currentDistrict,
   setCurrentDistrict,
+  selectedPlan,
 }) => {
   const floridaRef = useRef();
   const georgiaRef = useRef();
@@ -48,6 +53,12 @@ const Map = ({
     if (currentState === "florida") {
     }
   }, [currentDistrict]);
+
+  useEffect(() => {
+    if (selectedPlan === "2020") {
+      console.log("2020 plan selected");
+    }
+  }, [selectedPlan]);
 
   const tileLayerOptions = {
     detectRetina: true,
