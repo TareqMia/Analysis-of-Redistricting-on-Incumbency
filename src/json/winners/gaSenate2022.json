@@ -1,0 +1,41 @@
+{
+   "status":"OK",
+   "copyright":"Copyright (c) 2023 Pro Publica Inc. All Rights Reserved.",
+   "results":[
+      {
+         "id": "O000174",
+         "name": "Jon Ossoff",
+         "first_name": "Jon",
+         "middle_name": null,
+         "last_name": "Ossoff",
+         "suffix": null,
+         "role": "Senator, 2nd Class",
+         "gender": "M",
+         "party": "D",
+         "times_topics_url": "",
+         "twitter_id": "SenOssoff",
+         "facebook_account": null,
+         "youtube_id": null,
+         "seniority": "1",
+         "next_election": "2026",
+         "api_uri": "https://api.propublica.org/congress/v1/members/O000174.json"
+      },
+      {
+         "id": "W000790",
+         "name": "Raphael Warnock",
+         "first_name": "Raphael",
+         "middle_name": null,
+         "last_name": "Warnock",
+         "suffix": null,
+         "role": "Senator, 3rd Class",
+         "gender": "M",
+         "party": "D",
+         "times_topics_url": "",
+         "twitter_id": "SenatorWarnock",
+         "facebook_account": null,
+         "youtube_id": null,
+         "seniority": "3",
+         "next_election": "2028",
+         "api_uri": "https://api.propublica.org/congress/v1/members/W000790.json"
+      }
+]}

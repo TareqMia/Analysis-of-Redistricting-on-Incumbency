@@ -1,0 +1,41 @@
+{
+   "status":"OK",
+   "copyright":"Copyright (c) 2023 Pro Publica Inc. All Rights Reserved.",
+   "results":[
+      {
+         "id": "S001217",
+         "name": "Rick Scott",
+         "first_name": "Rick",
+         "middle_name": null,
+         "last_name": "Scott",
+         "suffix": null,
+         "role": "Senator, 1st Class",
+         "gender": "M",
+         "party": "R",
+         "times_topics_url": null,
+         "twitter_id": "SenRickScott",
+         "facebook_account": null,
+         "youtube_id": null,
+         "seniority": "1",
+         "next_election": "2024",
+         "api_uri": "https://api.propublica.org/congress/v1/members/S001217.json"
+      },
+      {
+         "id": "R000595",
+         "name": "Marco Rubio",
+         "first_name": "Marco",
+         "middle_name": null,
+         "last_name": "Rubio",
+         "suffix": null,
+         "role": "Senator, 3rd Class",
+         "gender": "M",
+         "party": "R",
+         "times_topics_url": "",
+         "twitter_id": "SenRubioPress",
+         "facebook_account": "SenatorMarcoRubio",
+         "youtube_id": "SenatorMarcoRubio",
+         "seniority": "13",
+         "next_election": "2028",
+         "api_uri": "https://api.propublica.org/congress/v1/members/R000595.json"
+      }
+]}
