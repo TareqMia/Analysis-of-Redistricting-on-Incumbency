@@ -2,17 +2,30 @@ import React, { useRef, useEffect, useState } from "react";
 import flHouse22 from '../json/winners/flHouse2022.json';
 import flSenate22 from '../json/winners/flSenate2022.json';
 import gaHouse22 from '../json/winners/gaHouse2022.json';
-import geSenate22 from '../json/winners/gaSenate2022.json';
+import gaSenate22 from '../json/winners/gaSenate2022.json';
+import paHouse22 from '../json/winners/paHouse2022.json';
+import paSenate22 from '../json/winners/paSenate2022.json';
 
 
-const Table = ({ currentState, setCurrentState }) => {
-   const [data, setData] = useState(flHouse22.results);
+const Table = ({ currentState}) => {
+   const [data, setData] = useState([]);
 
-  //  useEffect(() => {
-  //   if (currentState === "florida") {
-  //     setData(flHouse22);
-  //   }
-  // }, [currentState]);
+   useEffect(() => {
+    if (currentState === "florida") {
+      setData(flHouse22.results);
+    }
+    if (currentState === "georgia") {
+      setData(gaHouse22.results);
+    }
+    if (currentState === "pennsylvania") {
+      setData(paHouse22.results);
+    }
+
+    if (currentState === null) {
+      setData([]);
+    }
+
+  }, [currentState]);
 
    return(
       <div className="incumbents">

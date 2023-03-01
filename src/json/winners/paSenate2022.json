@@ -1,0 +1,41 @@
+{
+   "status":"OK",
+   "copyright":"Copyright (c) 2023 Pro Publica Inc. All Rights Reserved.",
+   "results":[
+      {
+         "id": "C001070",
+         "name": "Bob Casey",
+         "first_name": "Bob",
+         "middle_name": null,
+         "last_name": "Casey",
+         "suffix": null,
+         "role": "Senator, 1st Class",
+         "gender": "M",
+         "party": "D",
+         "times_topics_url": "http://topics.nytimes.com/top/reference/timestopics/people/c/robert_p_jr_casey/index.html",
+         "twitter_id": "SenBobCasey",
+         "facebook_account": "SenatorBobCasey",
+         "youtube_id": "SenatorBobCasey",
+         "seniority": "17",
+         "next_election": "2024",
+         "api_uri": "https://api.propublica.org/congress/v1/members/C001070.json"
+      },
+      {
+         "id": "F000479",
+         "name": "John Fetterman",
+         "first_name": "John",
+         "middle_name": null,
+         "last_name": "Fetterman",
+         "suffix": null,
+         "role": "Senator, 3rd Class",
+         "gender": "M",
+         "party": "D",
+         "times_topics_url": null,
+         "twitter_id": null,
+         "facebook_account": null,
+         "youtube_id": null,
+         "seniority": "1",
+         "next_election": "2028",
+         "api_uri": "https://api.propublica.org/congress/v1/members/F000479.json"
+      }
+]}
