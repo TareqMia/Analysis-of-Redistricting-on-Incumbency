@@ -18,16 +18,20 @@ const Map = ({ currentState, setCurrentState }) => {
     if (currentState === "florida") {
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    }
-
-    if (currentState === "georgia") {
+    } else if (currentState === "georgia") {
       floridaRef.current.clearLayers().addData(floridaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    }
-
-    if (currentState === "pennsylvania") {
+    } else if (currentState === "pennsylvania") {
       floridaRef.current.clearLayers().addData(floridaOutline);
       georgiaRef.current.clearLayers().addData(georgiaOutline);
+    } else {
+      if (floridaRef.current) {
+        const map = floridaRef.current.getLayers()[0]._map;
+        map.flyTo([35, -81], 5, {
+          duration: 1.5,
+          easeLinearity: 0.2,
+        });
+      }
     }
   }, [currentState]);
 
@@ -123,7 +127,12 @@ const Map = ({ currentState, setCurrentState }) => {
 
   const handleStateChange = (event) => {
     const state = event.target.value;
-    setCurrentState(state);
+
+    if (!state) {
+      setCurrentState("");
+    } else {
+      setCurrentState(state);
+    }
 
     if (state === "florida") {
       const map = floridaRef.current.getLayers()[0]._map;
@@ -196,6 +205,7 @@ const Map = ({ currentState, setCurrentState }) => {
       />
 
       <select
+        className="ui selection dropdown"
         onChange={handleStateChange}
         value={currentState}
         style={{
@@ -205,7 +215,9 @@ const Map = ({ currentState, setCurrentState }) => {
           zIndex: "1000",
         }}
       >
-        <option value="">Select a state</option>
+        <option className="item" value="">
+          Select a state
+        </option>
         <option value="florida">Florida</option>
         <option value="georgia">Georgia</option>
         <option value="pennsylvania">Pennsylvania</option>
