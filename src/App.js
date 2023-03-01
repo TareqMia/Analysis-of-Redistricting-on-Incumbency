@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
-import Table from "./components/Tables";
+import Table from "./components/Table";
 
 const App = () => {
   const [currentState, setCurrentState] = useState("");

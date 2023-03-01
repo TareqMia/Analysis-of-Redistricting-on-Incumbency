@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
 import floridaOutline from "../json/fl-state_outline.json";
-import georgiaOutline from "../json/ge-state_outline.json";
-import pennsylvaniaOutline from "../json/pl-state_outline.json";
+import georgiaOutline from "../json/ga-state_outline.json";
+import pennsylvaniaOutline from "../json/pa-state_outline.json";
 
 import florida from "../json/florida.json";
 import georgia from "../json/georgia.json";
