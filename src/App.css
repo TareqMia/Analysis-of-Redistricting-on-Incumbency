@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  display:flex; flex-direction:row;
+  display: flex;
+  flex-direction: row;
 }
 
 .map-container {
@@ -18,23 +19,29 @@
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   border: 3px solid #ddd;
-  width: 40%;
+  width: fit-content;
+  height: 200px;
   overflow: auto;
 }
 
-.incumbents td, #incumbents th {
+.incumbents td,
+#incumbents th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.incumbents tr:nth-child(even){background-color: #f2f2f2;}
+.incumbents tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-.incumbents tr:hover {background-color: #ddd;}
+.incumbents tr:hover {
+  background-color: #ddd;
+}
 
 .incumbents th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }

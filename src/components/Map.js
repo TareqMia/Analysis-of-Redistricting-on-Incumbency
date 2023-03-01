@@ -169,17 +169,17 @@ const Map = ({ currentState, setCurrentState }) => {
         data={floridaOutline}
         {...floridaOptions}
         onEachFeature={handleFloridaClicked}
-        // style={(feature) => {
-        //   const party = feature.properties.PARTY;
-        //   console.log(feature);
-        //   return {
-        //     fillColor: party === "REP" ? "red" : "blue",
-        //     weight: 1,
-        //     opacity: 1,
-        //     color: "white",
-        //     fillOpacity: 0.7,
-        //   };
-        // }}
+        style={(feature) => {
+          const party = feature.properties.PARTY;
+          console.log(feature);
+          return {
+            fillColor: party === "REP" ? "red" : "blue",
+            weight: 1,
+            opacity: 1,
+            color: "white",
+            fillOpacity: 0.7,
+          };
+        }}
       />
       <GeoJSON
         ref={georgiaRef}
