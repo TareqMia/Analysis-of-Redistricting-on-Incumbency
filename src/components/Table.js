@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import flHouse22 from '../json/winners/flHouse2022.json';
-import gaHouse22 from '../json/winners/gaHouse2022.json';
-import paHouse22 from '../json/winners/paHouse2022.json';
+import flHouse22 from "../json/winners/flHouse2022.json";
+import gaHouse22 from "../json/winners/gaHouse2022.json";
+import paHouse22 from "../json/winners/paHouse2022.json";
 
-
-const Table = ({ currentState}) => {
+const Table = ({ currentState }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -21,10 +20,9 @@ const Table = ({ currentState}) => {
     if (currentState === null) {
       setData([]);
     }
-
   }, [currentState]);
 
-  return(
+  return (
     <div className="incumbents">
       <table>
         <tr>
@@ -41,11 +39,11 @@ const Table = ({ currentState}) => {
               <td>{val.party}</td>
               <td>{"W"}</td>
             </tr>
-          )
+          );
         })}
       </table>
     </div>
   );
-}
+};
 
-export default Table
+export default Table;

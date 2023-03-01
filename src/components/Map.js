@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
 import floridaOutline from "../json/fl-state_outline.json";
-import georgiaOutline from "../json/ge-state_outline.json";
-import pennsylvaniaOutline from "../json/pl-state_outline.json";
+import georgiaOutline from "../json/ga-state_outline.json";
+import pennsylvaniaOutline from "../json/pa-state_outline.json";
 
 import florida from "../json/florida.json";
 import georgia from "../json/georgia.json";
@@ -18,16 +18,20 @@ const Map = ({ currentState, setCurrentState }) => {
     if (currentState === "florida") {
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    }
-
-    if (currentState === "georgia") {
+    } else if (currentState === "georgia") {
       floridaRef.current.clearLayers().addData(floridaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    }
-
-    if (currentState === "pennsylvania") {
+    } else if (currentState === "pennsylvania") {
       floridaRef.current.clearLayers().addData(floridaOutline);
       georgiaRef.current.clearLayers().addData(georgiaOutline);
+    } else {
+      if (floridaRef.current) {
+        const map = floridaRef.current.getLayers()[0]._map;
+        map.flyTo([35, -81], 5, {
+          duration: 1.5,
+          easeLinearity: 0.2,
+        });
+      }
     }
   }, [currentState]);
 
@@ -71,6 +75,7 @@ const Map = ({ currentState, setCurrentState }) => {
   const handleFloridaClicked = (feature, layer) => {
     layer.on({
       click: (event) => {
+        console.log(feature);
         if (!floridaRef.current) return;
 
         const map = event.target._map;
@@ -122,7 +127,12 @@ const Map = ({ currentState, setCurrentState }) => {
 
   const handleStateChange = (event) => {
     const state = event.target.value;
-    setCurrentState(state);
+
+    if (!state) {
+      setCurrentState("");
+    } else {
+      setCurrentState(state);
+    }
 
     if (state === "florida") {
       const map = floridaRef.current.getLayers()[0]._map;
@@ -195,6 +205,7 @@ const Map = ({ currentState, setCurrentState }) => {
       />
 
       <select
+        className="ui selection dropdown"
         onChange={handleStateChange}
         value={currentState}
         style={{
@@ -204,7 +215,9 @@ const Map = ({ currentState, setCurrentState }) => {
           zIndex: "1000",
         }}
       >
-        <option value="">Select a state</option>
+        <option className="item" value="">
+          Select a state
+        </option>
         <option value="florida">Florida</option>
         <option value="georgia">Georgia</option>
         <option value="pennsylvania">Pennsylvania</option>
