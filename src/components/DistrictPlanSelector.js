@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Dropdown } from "semantic-ui-react";
 
 const DistrictPlanSelector = ({
   selectedPlan,
@@ -11,26 +11,6 @@ const DistrictPlanSelector = ({
   };
 
   return (
-    // <div className="button-group">
-    //   <button
-    //     className="ui button blue"
-    //     onClick={() => handlePlanSelection(2022)}
-    //   >
-    //     2022
-    //   </button>
-    //   <button
-    //     className="ui button blue"
-    //     onClick={() => handlePlanSelection(2020)}
-    //   >
-    //     2020
-    //   </button>
-    //   <button
-    //     className="ui button blue"
-    //     onClick={() => handlePlanSelection("random")}
-    //   >
-    //     Random
-    //   </button>
-    // </div>
     <Button.Group className="button-group">
       <Button
         onClick={() => handlePlanSelection("2020")}
@@ -44,12 +24,28 @@ const DistrictPlanSelector = ({
       >
         2022
       </Button>
-      <Button
-        onClick={() => handlePlanSelection("random")}
-        active={selectedPlan === "random"}
-      >
-        Random
-      </Button>
+      <Dropdown text="Random" floating button className="icon">
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => handlePlanSelection("random")}
+            active={selectedPlan === "random"}
+          >
+            Random
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handlePlanSelection("random")}
+            active={selectedPlan === "random"}
+          >
+            Random2
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handlePlanSelection("random")}
+            active={selectedPlan === "random"}
+          >
+            Random3
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </Button.Group>
   );
 };
