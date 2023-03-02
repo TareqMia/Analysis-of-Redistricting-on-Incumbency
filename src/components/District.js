@@ -15,19 +15,19 @@ const District = ({ currentState, currentDistrict }) => {
     if (currentState === "florida") {
       setData(flDemo);
       if (currentDistrict !== null) {
-        setDist(currentDistrict.properties.DISTRICT);
+        setDist(parseInt(currentDistrict.properties.DISTRICT));
       }
     }
     if (currentState === "georgia") {
       setData(gaDemo);
       if (currentDistrict !== null) {
-        setDist(currentDistrict.properties.DISTRICT);
+        setDist(parseInt(currentDistrict.properties.DISTRICT));
       }
     }
-    if (currentState === "pennslyvania") {
+    if (currentState === "pennsylvania") {
       setData(paDemo);
       if (currentDistrict !== null) {
-        setDist(currentDistrict.properties.DISTRICT);
+        setDist(parseInt(currentDistrict.properties.DISTRICT));
       }
     }
 
@@ -44,7 +44,7 @@ const District = ({ currentState, currentDistrict }) => {
     if (dist && currentState === "georgia") {
       setCandid(gaWinners[dist - 1]);
     }
-    if (dist && currentState === "pennslyvania") {
+    if (dist && currentState === "pennsylvania") {
       setCandid(paWinners[dist - 1]);
     }
   }, [dist]);
