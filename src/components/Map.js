@@ -14,6 +14,8 @@ import georgia_2020 from "../json/2020-district_plans/georgia-2020.json";
 import pennsylvania_2020 from "../json/2020-district_plans/pennslyvania-2020.json";
 
 import florida_districts from "../json/districts-winners/Florida-District-Winners-2022.json";
+import georgia_districts from "../json/districts-winners/Georgia-District-Winners-2022.json";
+import pennsylvania_districts from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
 
 const Map = ({
   currentState,
@@ -234,11 +236,16 @@ const Map = ({
   const getParty = (state) => {
     if (state === "florida") {
       return florida_districts.map((obj) => obj.Party);
+    } else if (state === "georgia") {
+      return georgia_districts.map((obj) => obj.Party);
+    } else if (state === "pennsylvania") {
+      return pennsylvania_districts.map((obj) => obj.Party);
     }
   };
 
   const floridaParties = getParty("florida");
-  console.log(floridaParties);
+  const georgiaParties = getParty("georgia");
+  const pennsylvaniaParties = getParty("pennsylvania");
 
   return (
     <MapContainer
@@ -255,23 +262,6 @@ const Map = ({
       <GeoJSON
         ref={floridaRef}
         data={floridaOutline}
-        // style={
-        //   (stateOptions.style,
-        //   (feature) =>
-        //     feature === currentDistrict
-        //       ? {
-        //           fillColor: "blue",
-        //           fillOpacity: 0.5,
-        //           color: "black",
-        //           weight: 2,
-        //         }
-        //       : {
-        //           fillColor: "grey",
-        //           fillOpacity: 0.5,
-        //           color: "black",
-        //           weight: 1,
-        //         })
-        // }
         style={
           (stateOptions.style,
           (feature) =>
@@ -284,7 +274,10 @@ const Map = ({
                 }
               : {
                   fillColor:
-                    floridaParties[feature.properties.DISTRICT - 1] === "REP"
+                    currentState !== "florida"
+                      ? "grey"
+                      : floridaParties[feature.properties.DISTRICT - 1] ===
+                        "REP"
                       ? "red"
                       : "blue",
                   fillOpacity: 0.5,
@@ -297,23 +290,29 @@ const Map = ({
       <GeoJSON
         ref={georgiaRef}
         data={georgiaOutline}
-        // style={
-        //   (stateOptions.style,
-        //   (feature) =>
-        //     feature === currentDistrict
-        //       ? {
-        //           fillColor: "blue",
-        //           fillOpacity: 0.5,
-        //           color: "black",
-        //           weight: 2,
-        //         }
-        //       : {
-        //           fillColor: "grey",
-        //           fillOpacity: 0.5,
-        //           color: "black",
-        //           weight: 1,
-        //         })
-        // }
+        style={
+          (stateOptions.style,
+          (feature) =>
+            feature === currentDistrict
+              ? {
+                  fillColor: "green",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 2,
+                }
+              : {
+                  fillColor:
+                    currentState !== "georgia"
+                      ? "grey"
+                      : georgiaParties[feature.properties.DISTRICT - 1] ===
+                        "REP"
+                      ? "red"
+                      : "blue",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 1,
+                })
+        }
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
@@ -324,13 +323,19 @@ const Map = ({
           (feature) =>
             feature === currentDistrict
               ? {
-                  fillColor: "blue",
+                  fillColor: "green",
                   fillOpacity: 0.5,
                   color: "black",
                   weight: 2,
                 }
               : {
-                  fillColor: "grey",
+                  fillColor:
+                    currentState !== "pennsylvania"
+                      ? "grey"
+                      : pennsylvaniaParties[feature.properties.DISTRICT - 1] ===
+                        "REP"
+                      ? "red"
+                      : "blue",
                   fillOpacity: 0.5,
                   color: "black",
                   weight: 1,

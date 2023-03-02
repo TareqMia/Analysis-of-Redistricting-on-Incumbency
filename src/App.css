@@ -22,6 +22,8 @@
   max-height: 400px;
   overflow: auto;
   margin: 20px;
+  transform: scale(0.9);
+  overflow-x: hidden;
 }
 
 .district {
@@ -54,6 +56,8 @@
   text-align: center;
   background-color: #625f63;
   color: white;
+  position: sticky;
+  top: 0;
 }
 
 .ui.celled.table {
