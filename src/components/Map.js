@@ -304,6 +304,9 @@ const Map = ({
                       : showIncumbents &&
                         floridaIncumbents.includes(feature.properties.DISTRICT)
                       ? "orange"
+                      : showIncumbents &&
+                        !floridaIncumbents.includes(feature.properties.DISTRICT)
+                      ? "grey"
                       : floridaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"
@@ -337,6 +340,9 @@ const Map = ({
                           parseInt(feature.properties.DISTRICT)
                         )
                       ? "orange"
+                      : showIncumbents &&
+                        !georgiaIncumbents.includes(feature.properties.DISTRICT)
+                      ? "grey"
                       : georgiaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"
