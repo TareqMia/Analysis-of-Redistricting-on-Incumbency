@@ -13,6 +13,8 @@ import florida_2020 from "../json/2020-district_plans/florida-2020.json";
 import georgia_2020 from "../json/2020-district_plans/georgia-2020.json";
 import pennsylvania_2020 from "../json/2020-district_plans/pennslyvania-2020.json";
 
+import florida_districts from "../json/districts-winners/Florida-District-Winners-2022.json";
+
 const Map = ({
   currentState,
   setCurrentState,
@@ -58,43 +60,43 @@ const Map = ({
     }
   }, [currentDistrict]);
 
-  useEffect(() => {
-    if (selectedPlan === "2020") {
-      setFlorida(florida_2020);
-      setGeorgia(georgia_2020);
-      setPennsylvania(pennsylvania_2020);
+  //   useEffect(() => {
+  //     if (selectedPlan === "2020") {
+  //       setFlorida(florida_2020);
+  //       setGeorgia(georgia_2020);
+  //       setPennsylvania(pennsylvania_2020);
 
-      if (currentState === "florida") {
-        floridaRef.current.clearLayers().addData(florida);
-      }
+  //       if (currentState === "florida") {
+  //         floridaRef.current.clearLayers().addData(florida);
+  //       }
 
-      if (currentState === "pennsylvania") {
-        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
-      }
+  //       if (currentState === "pennsylvania") {
+  //         pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+  //       }
 
-      if (currentState === "georgia") {
-        georgiaRef.current.clearLayers().addData(georgia);
-      }
-    }
+  //       if (currentState === "georgia") {
+  //         georgiaRef.current.clearLayers().addData(georgia);
+  //       }
+  //     }
 
-    if (selectedPlan === "2022") {
-      setFlorida(florida_2022);
-      setGeorgia(georgia_2022);
-      setPennsylvania(pennsylvania_2022);
+  //     if (selectedPlan === "2022") {
+  //       setFlorida(florida_2022);
+  //       setGeorgia(georgia_2022);
+  //       setPennsylvania(pennsylvania_2022);
 
-      if (currentState === "florida") {
-        floridaRef.current.clearLayers().addData(florida);
-      }
+  //       if (currentState === "florida") {
+  //         floridaRef.current.clearLayers().addData(florida);
+  //       }
 
-      if (currentState === "pennsylvania") {
-        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
-      }
+  //       if (currentState === "pennsylvania") {
+  //         pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+  //       }
 
-      if (currentState === "georgia") {
-        georgiaRef.current.clearLayers().addData(georgia);
-      }
-    }
-  }, [selectedPlan]);
+  //       if (currentState === "georgia") {
+  //         georgiaRef.current.clearLayers().addData(georgia);
+  //       }
+  //     }
+  //   }, [selectedPlan]);
 
   const tileLayerOptions = {
     detectRetina: true,
@@ -121,6 +123,7 @@ const Map = ({
         if (!floridaRef.current) return;
 
         if (feature.geometry.type === "Polygon") {
+          console.log(florida_districts[feature.properties.DISTRICT - 1].Party);
           setCurrentDistrict(feature);
         }
 
@@ -132,6 +135,13 @@ const Map = ({
 
         floridaRef.current.clearLayers().addData(florida);
         setCurrentState("florida");
+
+        layer.setStyle({
+          fillColor: "white",
+          fillOpacity: 0.5,
+          color: "black",
+          weight: 2,
+        });
       },
       mouseover: (event) => {
         if (currentState === "florida") {
@@ -221,6 +231,15 @@ const Map = ({
     }
   };
 
+  const getParty = (state) => {
+    if (state === "florida") {
+      return florida_districts.map((obj) => obj.Party);
+    }
+  };
+
+  const floridaParties = getParty("florida");
+  console.log(floridaParties);
+
   return (
     <MapContainer
       className="map-container"
@@ -236,18 +255,38 @@ const Map = ({
       <GeoJSON
         ref={floridaRef}
         data={floridaOutline}
+        // style={
+        //   (stateOptions.style,
+        //   (feature) =>
+        //     feature === currentDistrict
+        //       ? {
+        //           fillColor: "blue",
+        //           fillOpacity: 0.5,
+        //           color: "black",
+        //           weight: 2,
+        //         }
+        //       : {
+        //           fillColor: "grey",
+        //           fillOpacity: 0.5,
+        //           color: "black",
+        //           weight: 1,
+        //         })
+        // }
         style={
           (stateOptions.style,
           (feature) =>
             feature === currentDistrict
               ? {
-                  fillColor: "blue",
+                  fillColor: "green",
                   fillOpacity: 0.5,
                   color: "black",
                   weight: 2,
                 }
               : {
-                  fillColor: "grey",
+                  fillColor:
+                    floridaParties[feature.properties.DISTRICT - 1] === "REP"
+                      ? "red"
+                      : "blue",
                   fillOpacity: 0.5,
                   color: "black",
                   weight: 1,
@@ -258,23 +297,23 @@ const Map = ({
       <GeoJSON
         ref={georgiaRef}
         data={georgiaOutline}
-        style={
-          (stateOptions.style,
-          (feature) =>
-            feature === currentDistrict
-              ? {
-                  fillColor: "blue",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 2,
-                }
-              : {
-                  fillColor: "grey",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 1,
-                })
-        }
+        // style={
+        //   (stateOptions.style,
+        //   (feature) =>
+        //     feature === currentDistrict
+        //       ? {
+        //           fillColor: "blue",
+        //           fillOpacity: 0.5,
+        //           color: "black",
+        //           weight: 2,
+        //         }
+        //       : {
+        //           fillColor: "grey",
+        //           fillOpacity: 0.5,
+        //           color: "black",
+        //           weight: 1,
+        //         })
+        // }
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
