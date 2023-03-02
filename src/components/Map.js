@@ -23,6 +23,8 @@ const Map = ({
   currentDistrict,
   setCurrentDistrict,
   selectedPlan,
+  showIncumbents,
+  setShowIncumbents,
 }) => {
   const floridaRef = useRef();
   const georgiaRef = useRef();
@@ -362,6 +364,19 @@ const Map = ({
         <option value="georgia">Georgia</option>
         <option value="pennsylvania">Pennsylvania</option>
       </select>
+
+      <div
+        style={{
+          position: "absolute",
+          top: "50px",
+          right: "10px",
+          zIndex: "1000",
+        }}
+        className="ui checkbox"
+      >
+        <input type="checkbox" name="public" />
+        <label>Show Incumbents</label>
+      </div>
     </MapContainer>
   );
 };

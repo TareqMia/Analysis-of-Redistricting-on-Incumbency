@@ -4,11 +4,12 @@ import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
 import Table from "./components/Table";
 import DistrictPlanSelector from "./components/DistrictPlanSelector";
-import District from "./components/District"
+import District from "./components/District";
 
 const App = () => {
   const [currentState, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState(null);
+  const [showIncumbents, setShowIncumbents] = useState(false);
 
   const districtPlans = {
     2022: "2022",
@@ -26,6 +27,8 @@ const App = () => {
         currentDistrict={currentDistrict}
         setCurrentDistrict={setCurrentDistrict}
         selectedPlan={selectedPlan}
+        showIncumbents={showIncumbents}
+        setShowIncumbents={setShowIncumbents}
       />
       <DistrictPlanSelector
         selectedPlan={selectedPlan}
@@ -33,11 +36,18 @@ const App = () => {
         districtPlans={districtPlans}
       />
       <div className="data">
-      {currentState && (
-        <Table currentState={currentState} setCurrentState={setCurrentState} />
-      )}
-      {currentDistrict && (
-      <District currentState={currentState} currentDistrict={currentDistrict}/>)}
+        {currentState && (
+          <Table
+            currentState={currentState}
+            setCurrentState={setCurrentState}
+          />
+        )}
+        {currentDistrict && (
+          <District
+            currentState={currentState}
+            currentDistrict={currentDistrict}
+          />
+        )}
       </div>
     </div>
   );
