@@ -1,35 +1,51 @@
 import React, { Component, useState, useEffect } from "react";
 import flDemo from "../json/demo-data/Florida-Demographic.json";
+import gaDemo from "../json/demo-data/Georgia-Demographic.json";
+import paDemo from "../json/demo-data/Pennslyvania-Demographic.json";
 import flWinners from "../json/districts-winners/Florida-District-Winners-2022.json";
+import gaWinners from "../json/districts-winners/Georgia-District-Winners-2022.json";
+import paWinners from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
 
 const District = ({ currentState, currentDistrict }) => {
   const [data, setData] = useState([]);
   const [dist, setDist] = useState(0);
   const [candid, setCandid] = useState([]);
-  // console.log(currentState === "florida");
+
   useEffect(() => {
     if (currentState === "florida") {
-      // console.log(currentState);
       setData(flDemo);
-      // console.log(currentDistrict !== null);
       if (currentDistrict !== null) {
         setDist(currentDistrict.properties.DISTRICT);
-        console.log(dist);
-        console.log(currentDistrict.properties.DISTRICT);
-        // console.log(candid);
       }
     }
-    // console.log(candid);
+    if (currentState === "georgia") {
+      setData(gaDemo);
+      if (currentDistrict !== null) {
+        setDist(currentDistrict.properties.DISTRICT);
+      }
+    }
+    if (currentState === "pennslyvania") {
+      setData(paDemo);
+      if (currentDistrict !== null) {
+        setDist(currentDistrict.properties.DISTRICT);
+      }
+    }
 
     if (currentState === null) {
       setData([]);
     }
   }, [currentState, currentDistrict]);
 
+  console.log(currentDistrict.properties.DISTRICT);
   useEffect(() => {
-    if (dist) {
+    if (dist && currentState === "florida") {
       setCandid(flWinners[dist - 1]);
-      // console.log(candid);
+    }
+    if (dist && currentState === "georgia") {
+      setCandid(gaWinners[dist - 1]);
+    }
+    if (dist && currentState === "pennslyvania") {
+      setCandid(paWinners[dist - 1]);
     }
   }, [dist]);
 

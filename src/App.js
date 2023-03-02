@@ -32,11 +32,13 @@ const App = () => {
         setSelectedPlan={setSelectedPlan}
         districtPlans={districtPlans}
       />
+      <div className="data">
       {currentState && (
         <Table currentState={currentState} setCurrentState={setCurrentState} />
       )}
       {currentDistrict && (
       <District currentState={currentState} currentDistrict={currentDistrict}/>)}
+      </div>
     </div>
   );
 };

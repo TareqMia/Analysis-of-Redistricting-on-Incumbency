@@ -19,9 +19,19 @@
   border: 3px solid #ddd;
   width: 45vw;
   height: min-content;
-  max-height: 500px;
+  max-height: 400px;
   overflow: auto;
   margin: 20px;
+}
+
+.district {
+  height: min-content;
+  max-height: 300px;
+  width: 45vw;
+}
+
+.data {
+  overflow: hidden;
 }
 
 .incumbents td,
