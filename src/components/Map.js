@@ -5,9 +5,9 @@ import floridaOutline from "../json/fl-state_outline.json";
 import georgiaOutline from "../json/ga-state_outline.json";
 import pennsylvaniaOutline from "../json/pa-state_outline.json";
 
-import florida from "../json/florida.json";
-import georgia from "../json/georgia.json";
-import pennsylvania from "../json/pennsylvania.json";
+import florida_2022 from "../json/florida.json";
+import georgia_2022 from "../json/georgia.json";
+import pennsylvania_2022 from "../json/pennsylvania.json";
 
 import florida_2020 from "../json/2020-district_plans/florida-2020.json";
 import georgia_2020 from "../json/2020-district_plans/georgia-2020.json";
@@ -23,6 +23,10 @@ const Map = ({
   const floridaRef = useRef();
   const georgiaRef = useRef();
   const pennsylvaniaRef = useRef();
+
+  const [florida, setFlorida] = useState(florida_2022);
+  const [georgia, setGeorgia] = useState(georgia_2022);
+  const [pennsylvania, setPennsylvania] = useState(pennsylvania_2022);
 
   useEffect(() => {
     if (currentState === "florida") {
@@ -47,7 +51,7 @@ const Map = ({
       }
     }
     setCurrentDistrict(null);
-  }, [currentState]);
+  }, [currentState, selectedPlan]);
 
   useEffect(() => {
     if (currentState === "florida") {
@@ -56,7 +60,39 @@ const Map = ({
 
   useEffect(() => {
     if (selectedPlan === "2020") {
-      console.log("2020 plan selected");
+      setFlorida(florida_2020);
+      setGeorgia(georgia_2020);
+      setPennsylvania(pennsylvania_2020);
+
+      if (currentState === "florida") {
+        floridaRef.current.clearLayers().addData(florida);
+      }
+
+      if (currentState === "pennsylvania") {
+        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+      }
+
+      if (currentState === "georgia") {
+        georgiaRef.current.clearLayers().addData(georgia);
+      }
+    }
+
+    if (selectedPlan === "2022") {
+      setFlorida(florida_2022);
+      setGeorgia(georgia_2022);
+      setPennsylvania(pennsylvania_2022);
+
+      if (currentState === "florida") {
+        floridaRef.current.clearLayers().addData(florida);
+      }
+
+      if (currentState === "pennsylvania") {
+        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+      }
+
+      if (currentState === "georgia") {
+        georgiaRef.current.clearLayers().addData(georgia);
+      }
     }
   }, [selectedPlan]);
 
