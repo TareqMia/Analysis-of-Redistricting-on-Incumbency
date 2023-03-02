@@ -17,6 +17,10 @@ import florida_districts from "../json/districts-winners/Florida-District-Winner
 import georgia_districts from "../json/districts-winners/Georgia-District-Winners-2022.json";
 import pennsylvania_districts from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
 
+import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.json";
+import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
+import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
+
 const Map = ({
   currentState,
   setCurrentState,
@@ -245,9 +249,27 @@ const Map = ({
     }
   };
 
+  const getIncumbents = (state) => {
+    if (state === "florida") {
+      return florida_incumbents.map((obj) => Math.floor(obj.District));
+    } else if (state === "georgia") {
+      return georgia_incumbents.map((obj) => Math.floor(obj.District));
+    } else if (state === "pennsylvania") {
+      return pennsylvania_incumbents.map((obj) => Math.floor(obj.District));
+    }
+  };
+
   const floridaParties = getParty("florida");
   const georgiaParties = getParty("georgia");
   const pennsylvaniaParties = getParty("pennsylvania");
+
+  const floridaIncumbents = getIncumbents("florida");
+  const georgiaIncumbents = getIncumbents("georgia");
+  const pennsylvaniaIncumbents = getIncumbents("pennsylvania");
+
+  const handleShowIncumbents = (event) => {
+    setShowIncumbents(event.target.checked);
+  };
 
   return (
     <MapContainer
@@ -257,6 +279,7 @@ const Map = ({
       style={{ height: "100vh" }}
     >
       <TileLayer
+        // url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         style={{ border: "none" }}
         {...tileLayerOptions}
@@ -278,6 +301,9 @@ const Map = ({
                   fillColor:
                     currentState !== "florida"
                       ? "grey"
+                      : showIncumbents &&
+                        floridaIncumbents.includes(feature.properties.DISTRICT)
+                      ? "orange"
                       : floridaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"
@@ -306,6 +332,11 @@ const Map = ({
                   fillColor:
                     currentState !== "georgia"
                       ? "grey"
+                      : showIncumbents &&
+                        georgiaIncumbents.includes(
+                          parseInt(feature.properties.DISTRICT)
+                        )
+                      ? "orange"
                       : georgiaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"
@@ -334,6 +365,11 @@ const Map = ({
                   fillColor:
                     currentState !== "pennsylvania"
                       ? "grey"
+                      : showIncumbents &&
+                        pennsylvaniaIncumbents.includes(
+                          parseInt(feature.properties.DISTRICT)
+                        )
+                      ? "orange"
                       : pennsylvaniaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"
@@ -374,7 +410,12 @@ const Map = ({
         }}
         className="ui checkbox"
       >
-        <input type="checkbox" name="public" />
+        <input
+          type="checkbox"
+          name="public"
+          checked={showIncumbents}
+          onChange={handleShowIncumbents}
+        />
         <label>Show Incumbents</label>
       </div>
     </MapContainer>

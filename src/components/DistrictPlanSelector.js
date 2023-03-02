@@ -10,8 +10,6 @@ const DistrictPlanSelector = ({
     setSelectedPlan(districtPlans[plan]);
   };
 
-  console.log(selectedPlan);
-
   return (
     // <div className="button-group">
     //   <button

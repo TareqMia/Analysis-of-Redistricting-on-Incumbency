@@ -62,7 +62,7 @@ const District = ({ currentState, currentDistrict }) => {
       <br />
       <table className="ui celled table">
         <tr>
-          <th>District</th>
+          {/* <th>District</th> */}
           <th>Total Population</th>
           <th>% White</th>
           <th>% Black or African American</th>
@@ -76,7 +76,7 @@ const District = ({ currentState, currentDistrict }) => {
           if (val.District === dist) {
             return (
               <tr key={key}>
-                <td>{val.District}</td>
+                {/* <td>{val.District}</td> */}
                 <td>{total}</td>
                 <td>{((val.White / (total * 1.0)) * 100).toFixed(2)}</td>
                 <td>
