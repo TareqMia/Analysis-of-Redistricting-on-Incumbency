@@ -19,17 +19,22 @@
   border: 3px solid #ddd;
   width: 45vw;
   height: min-content;
-  max-height: 400px;
+  max-height: 250px;
   overflow: auto;
-  margin: 20px;
   transform: scale(0.9);
   overflow-x: hidden;
 }
 
+/* .ensemble {
+  max-height: 250px;
+  height:min-content;
+} */
+
 .district {
   height: min-content;
-  max-height: 300px;
+  max-height: 50px;
   width: 45vw;
+  transform: scale(0.9);
 }
 
 .data {
@@ -39,7 +44,7 @@
 .incumbents td,
 #incumbents th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 4px;
 }
 
 .incumbents tr:nth-child(even) {
@@ -53,6 +58,7 @@
 .incumbents th {
   padding-top: 12px;
   padding-bottom: 12px;
+  font-weight: bold;
   text-align: center;
   background-color: #625f63;
   color: white;
