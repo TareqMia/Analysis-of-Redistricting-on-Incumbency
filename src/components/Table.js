@@ -3,8 +3,16 @@ import flCandidates from "../json/incumbent-2022/Florida-Incumbent-2022.json";
 import gaCandidates from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
 import paCandidates from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 
-const Table = ({ currentState }) => {
+const Table = ({ currentState, currentDistrict, setCurrentDistrict }) => {
   const [data, setData] = useState([]);
+
+  const handleRowClicked = (districtNum) => {
+    setCurrentDistrict({
+      properties: {
+        DISTRICT: parseInt(districtNum),
+      },
+    });
+  };
 
   useEffect(() => {
     if (currentState === "florida") {
@@ -35,17 +43,24 @@ const Table = ({ currentState }) => {
           <th>Population Variation</th>
         </tr>
         {data.map((val, key) => {
-          // console.log(val);
           let color = val.Party === "DEM" ? "blue" : "red";
+
+          let isHighlighted =
+            currentDistrict &&
+            currentDistrict.properties.DISTRICT === parseInt(val.District);
           return (
-            <tr key={key}>
+            <tr
+              key={key}
+              onClick={() => handleRowClicked(val.District)}
+              style={{ background: isHighlighted ? "#FFFF8A" : "transparent" }}
+            >
               <td>{val.Candidate}</td>
               <td style={{ color: color }}>{val.Party}</td>
               <td>{val["Primary Outcome"]}</td>
               <td>{val.District}</td>
               <td>{val.State}</td>
               <td>{(Math.random() + 0.3).toFixed(1)}</td>
-              <td>{(Math.random()*500 - 100).toFixed(1)}</td>
+              <td>{(Math.random() * 500 - 100).toFixed(1)}</td>
             </tr>
           );
         })}

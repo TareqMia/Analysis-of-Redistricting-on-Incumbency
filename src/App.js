@@ -43,6 +43,8 @@ const App = () => {
       "https://cdn.discordapp.com/attachments/1080353490171346954/1080773577260937266/image.png";
     count = 16;
   }
+
+  console.log(currentDistrict);
   return (
     <div className="App">
       <Map
@@ -67,7 +69,8 @@ const App = () => {
           {currentState && (
             <Table
               currentState={currentState}
-              setCurrentState={setCurrentState}
+              currentDistrict={currentDistrict}
+              setCurrentDistrict={setCurrentDistrict}
             />
           )}
           {currentDistrict && (

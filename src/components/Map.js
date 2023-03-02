@@ -63,10 +63,7 @@ const Map = ({
     setCurrentDistrict(null);
   }, [currentState, selectedPlan]);
 
-  useEffect(() => {
-    if (currentState === "florida") {
-    }
-  }, [currentDistrict]);
+  useEffect(() => {}, [currentDistrict]);
 
   //   useEffect(() => {
   //     if (selectedPlan === "2020") {
@@ -131,7 +128,6 @@ const Map = ({
         if (!floridaRef.current) return;
 
         if (feature.geometry.type === "Polygon") {
-          console.log(florida_districts[feature.properties.DISTRICT - 1].Party);
           setCurrentDistrict(feature);
         }
 
@@ -290,7 +286,9 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            feature === currentDistrict
+            currentDistrict &&
+            currentDistrict.properties.DISTRICT ===
+              parseInt(feature.properties.DISTRICT)
               ? {
                   fillColor: "green",
                   fillOpacity: 0.5,
@@ -324,7 +322,7 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            feature === currentDistrict
+            currentDistrict && currentDistrict === feature
               ? {
                   fillColor: "green",
                   fillOpacity: 0.5,
@@ -360,7 +358,8 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            feature === currentDistrict
+            currentDistrict &&
+            currentDistrict.properties.DISTRICT === feature.properties.DISTRICT
               ? {
                   fillColor: "green",
                   fillOpacity: 0.5,
@@ -372,10 +371,15 @@ const Map = ({
                     currentState !== "pennsylvania"
                       ? "grey"
                       : showIncumbents &&
-                        pennsylvaniaIncumbents.includes(
+                        georgiaIncumbents.includes(
                           parseInt(feature.properties.DISTRICT)
                         )
                       ? "orange"
+                      : showIncumbents &&
+                        !pennsylvaniaIncumbents.includes(
+                          feature.properties.DISTRICT
+                        )
+                      ? "grey"
                       : pennsylvaniaParties[feature.properties.DISTRICT - 1] ===
                         "REP"
                       ? "red"

@@ -36,7 +36,6 @@ const District = ({ currentState, currentDistrict }) => {
     }
   }, [currentState, currentDistrict]);
 
-  console.log(currentDistrict.properties.DISTRICT);
   useEffect(() => {
     if (dist && currentState === "florida") {
       setCandid(flWinners[dist - 1]);
