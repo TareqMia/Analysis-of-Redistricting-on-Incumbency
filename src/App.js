@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
 import Table from "./components/Table";
 import DistrictPlanSelector from "./components/DistrictPlanSelector";
+import District from "./components/District"
 
 const App = () => {
   const [currentState, setCurrentState] = useState("");
@@ -34,6 +35,8 @@ const App = () => {
       {currentState && (
         <Table currentState={currentState} setCurrentState={setCurrentState} />
       )}
+      {currentDistrict && (
+      <District currentState={currentState} currentDistrict={currentDistrict}/>)}
     </div>
   );
 };
