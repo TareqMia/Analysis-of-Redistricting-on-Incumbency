@@ -51,9 +51,9 @@ const District = ({ currentState, currentDistrict }) => {
 
   return (
     <div className="district">
-      <h1>
+      <h3>
         <strong>District Details</strong>
-      </h1>
+      </h3>
       <strong>District:</strong> {dist}
       <br />
       <strong>Winner:</strong> {candid.Candidate}

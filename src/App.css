@@ -35,10 +35,31 @@
   max-height: 50px;
   width: 45vw;
   transform: scale(0.9);
+  margin-bottom: 180px;
+  transition: opacity 0.5s ease-in-out;
+
+  animation-name: slide-down;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.district.show {
+  opacity: 1;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-70%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .data {
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .incumbents td,
