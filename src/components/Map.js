@@ -148,6 +148,10 @@ const Map = ({
 
         setCurrentState("georgia");
 
+        if (feature.geometry.type === "Polygon") {
+          setCurrentDistrict(feature);
+        }
+
         const map = event.target._map;
         map.flyTo([32.7, -83.2], 7, {
           duration: 1.5,
@@ -165,6 +169,10 @@ const Map = ({
         if (!pennsylvaniaRef) return;
 
         setCurrentState("pennsylvania");
+
+        if (feature.geometry.type === "Polygon") {
+          setCurrentDistrict(feature);
+        }
 
         const map = event.target._map;
         map.flyTo([41.203323, -77.194527], 7, {
@@ -250,13 +258,45 @@ const Map = ({
       <GeoJSON
         ref={georgiaRef}
         data={georgiaOutline}
-        style={stateOptions.style}
+        style={
+          (stateOptions.style,
+          (feature) =>
+            feature === currentDistrict
+              ? {
+                  fillColor: "blue",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 2,
+                }
+              : {
+                  fillColor: "grey",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 1,
+                })
+        }
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
         ref={pennsylvaniaRef}
         data={pennsylvaniaOutline}
-        style={stateOptions.style}
+        style={
+          (stateOptions.style,
+          (feature) =>
+            feature === currentDistrict
+              ? {
+                  fillColor: "blue",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 2,
+                }
+              : {
+                  fillColor: "grey",
+                  fillOpacity: 0.5,
+                  color: "black",
+                  weight: 1,
+                })
+        }
         onEachFeature={handlePennsylvaniaClicked}
       />
 
