@@ -89,7 +89,7 @@ const App = () => {
               <img
                 src={imag}
                 alt="Ensemble Box and Whiskers"
-                style={{ width: "500px" }}
+                style={{ width: "600px" }}
               />{" "}
               <br />
               <img

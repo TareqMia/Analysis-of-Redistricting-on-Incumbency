@@ -301,7 +301,7 @@ const Map = ({
                       ? "grey"
                       : showIncumbents &&
                         floridaIncumbents.includes(feature.properties.DISTRICT)
-                      ? "orange"
+                      ? "purple"
                       : showIncumbents &&
                         !floridaIncumbents.includes(feature.properties.DISTRICT)
                       ? "grey"
@@ -337,7 +337,7 @@ const Map = ({
                         georgiaIncumbents.includes(
                           parseInt(feature.properties.DISTRICT)
                         )
-                      ? "orange"
+                      ? "purple"
                       : showIncumbents &&
                         !georgiaIncumbents.includes(feature.properties.DISTRICT)
                       ? "grey"
@@ -374,7 +374,7 @@ const Map = ({
                         georgiaIncumbents.includes(
                           parseInt(feature.properties.DISTRICT)
                         )
-                      ? "orange"
+                      ? "purple"
                       : showIncumbents &&
                         !pennsylvaniaIncumbents.includes(
                           feature.properties.DISTRICT

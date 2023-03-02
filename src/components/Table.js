@@ -31,7 +31,7 @@ const Table = ({ currentState, currentDistrict, setCurrentDistrict }) => {
   }, [currentState]);
 
   return (
-    <div className="incumbents">
+    <div className="incumbents ui">
       <table className="ui celled table">
         <tr>
           <th>Name</th>
