@@ -42,6 +42,7 @@ const Map = ({
   const [florida, setFlorida] = useState(florida_2022);
   const [georgia, setGeorgia] = useState(georgia_2022);
   const [pennsylvania, setPennsylvania] = useState(pennsylvania_2022);
+  const [selectedState, setSelectedState] = useState(store.currentState);
 
   const getMessage = async () => {
     const result = await axios.get("http://localhost:8080/api/map/GA");
@@ -220,7 +221,9 @@ const Map = ({
   const handleStateChange = (event) => {
     const state = event.target.value;
 
-    console.log(state);
+    if (!state) {
+      store.setState("");
+    }
 
     // if (!state) {
     //   store.setState("");
@@ -230,7 +233,7 @@ const Map = ({
     //   // setCurrentState(state);
     // }
 
-    if (state === "florida") {
+    if (state === "FL") {
       store.setState("FL");
       const map = floridaRef.current.getLayers()[0]._map;
       map.flyTo([27.8, -83.5], 7, {
@@ -240,7 +243,7 @@ const Map = ({
       floridaRef.current.clearLayers().addData(florida);
     }
 
-    if (state === "georgia") {
+    if (state === "GA") {
       store.setState("GA");
       const map = georgiaRef.current.getLayers()[0]._map;
       map.flyTo([32.7, -83.2], 7, {
@@ -250,7 +253,7 @@ const Map = ({
       georgiaRef.current.clearLayers().addData(georgia);
     }
 
-    if (state === "pennsylvania") {
+    if (state === "PA") {
       store.setState("PA");
       const map = pennsylvaniaRef.current.getLayers()[0]._map;
       map.flyTo([41.203323, -77.194527], 7, {
@@ -432,9 +435,9 @@ const Map = ({
         <option className="item" value="">
           Select a state
         </option>
-        <option value="florida">Florida</option>
-        <option value="georgia">Georgia</option>
-        <option value="pennsylvania">Pennsylvania</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="PA">Pennsylvania</option>
       </select>
 
       <div
