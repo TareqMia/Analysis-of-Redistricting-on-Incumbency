@@ -21,6 +21,8 @@ import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.js
 import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
 import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 
+import axios from "axios";
+
 const Map = ({
   currentState,
   setCurrentState,
@@ -38,7 +40,14 @@ const Map = ({
   const [georgia, setGeorgia] = useState(georgia_2022);
   const [pennsylvania, setPennsylvania] = useState(pennsylvania_2022);
 
+  const getMessage = async () => {
+    const result = await axios.get("http://localhost:8080/api/map/GA");
+    console.log(result);
+  };
+
   useEffect(() => {
+    getMessage();
+
     if (currentState === "florida") {
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
