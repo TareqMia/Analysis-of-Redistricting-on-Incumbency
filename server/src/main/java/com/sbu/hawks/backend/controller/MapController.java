@@ -23,4 +23,10 @@ public class MapController {
     String getFlorida() {
         return "testing from 3000";
     }
+
+    @GetMapping("/GA")
+    @ResponseBody
+    String getGeorgia() {
+        return "Georgia";
+    }
 }
