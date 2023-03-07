@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import GlobalStoreContext from "../store";
 
 import floridaOutline from "../json/fl-state_outline.json";
 import georgiaOutline from "../json/ga-state_outline.json";
@@ -36,6 +37,8 @@ const Map = ({
   const georgiaRef = useRef();
   const pennsylvaniaRef = useRef();
 
+  const { store } = useContext(GlobalStoreContext);
+
   const [florida, setFlorida] = useState(florida_2022);
   const [georgia, setGeorgia] = useState(georgia_2022);
   const [pennsylvania, setPennsylvania] = useState(pennsylvania_2022);
@@ -46,15 +49,18 @@ const Map = ({
   };
 
   useEffect(() => {
-    getMessage();
+    // getMessage();
 
-    if (currentState === "florida") {
+    if (store.currentState === "FL") {
+      store.setState("FL");
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    } else if (currentState === "georgia") {
+    } else if (store.currentState === "GA") {
+      store.setState("GA");
       floridaRef.current.clearLayers().addData(floridaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
-    } else if (currentState === "pennsylvania") {
+    } else if (store.currentState === "PA") {
+      store.setState("PA");
       floridaRef.current.clearLayers().addData(floridaOutline);
       georgiaRef.current.clearLayers().addData(georgiaOutline);
     } else {
@@ -70,7 +76,7 @@ const Map = ({
       }
     }
     setCurrentDistrict(null);
-  }, [currentState, selectedPlan]);
+  }, [store.currentState, selectedPlan]);
 
   useEffect(() => {}, [currentDistrict]);
 
@@ -147,6 +153,7 @@ const Map = ({
         });
 
         floridaRef.current.clearLayers().addData(florida);
+        store.setState("FL");
         setCurrentState("florida");
 
         layer.setStyle({
@@ -165,6 +172,7 @@ const Map = ({
   };
 
   const handleGeorgiaClicked = (feature, layer) => {
+    store.setState("GA");
     layer.on({
       click: (event) => {
         if (!georgiaRef.current) return;
@@ -187,6 +195,7 @@ const Map = ({
   };
 
   const handlePennsylvaniaClicked = (feature, layer) => {
+    store.setState("PA");
     layer.on({
       click: (event) => {
         if (!pennsylvaniaRef) return;
@@ -211,9 +220,11 @@ const Map = ({
     const state = event.target.value;
 
     if (!state) {
-      setCurrentState("");
+      store.setState("");
+      // setCurrentState("");
     } else {
-      setCurrentState(state);
+      store.setState(state);
+      // setCurrentState(state);
     }
 
     if (state === "florida") {
@@ -306,7 +317,7 @@ const Map = ({
                 }
               : {
                   fillColor:
-                    currentState !== "florida"
+                    store.currentState !== "FL"
                       ? "grey"
                       : showIncumbents &&
                         floridaIncumbents.includes(feature.properties.DISTRICT)
@@ -340,7 +351,7 @@ const Map = ({
                 }
               : {
                   fillColor:
-                    currentState !== "georgia"
+                    store.currentState !== "GA"
                       ? "grey"
                       : showIncumbents &&
                         georgiaIncumbents.includes(
@@ -377,7 +388,7 @@ const Map = ({
                 }
               : {
                   fillColor:
-                    currentState !== "pennsylvania"
+                    store.currentState !== "PA"
                       ? "grey"
                       : showIncumbents &&
                         georgiaIncumbents.includes(
@@ -404,7 +415,7 @@ const Map = ({
       <select
         className="ui selection dropdown"
         onChange={handleStateChange}
-        value={currentState}
+        value={store.currentState}
         style={{
           position: "absolute",
           top: "10px",

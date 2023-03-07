@@ -5,6 +5,7 @@ import Map from "./components/Map";
 import Table from "./components/Table";
 import DistrictPlanSelector from "./components/DistrictPlanSelector";
 import District from "./components/District";
+import { GlobalStoreContextProvider } from "./store";
 
 const App = () => {
   const [currentState, setCurrentState] = useState("");
@@ -44,65 +45,67 @@ const App = () => {
     count = 16;
   }
 
-  console.log(currentDistrict);
+  // console.log(currentDistrict);
   return (
-    <div className="App">
-      <Map
-        currentState={currentState}
-        setCurrentState={setCurrentState}
-        currentDistrict={currentDistrict}
-        setCurrentDistrict={setCurrentDistrict}
-        selectedPlan={selectedPlan}
-        showIncumbents={showIncumbents}
-        setShowIncumbents={setShowIncumbents}
-      />
-      <DistrictPlanSelector
-        selectedPlan={selectedPlan}
-        setSelectedPlan={setSelectedPlan}
-        districtPlans={districtPlans}
-      />
-      {/* <h3 style={{ textAlign: "center", color: "firebrick" }}>
-        <strong>Team Hawks</strong>
-      </h3> */}
-      <div style={{ height: "100vh", overflow: "auto" }}>
-        <div className="data">
-          {currentState && (
-            <Table
-              currentState={currentState}
-              currentDistrict={currentDistrict}
-              setCurrentDistrict={setCurrentDistrict}
-            />
-          )}
-          {currentDistrict && (
-            <District
-              currentState={currentState}
-              currentDistrict={currentDistrict}
-            />
-          )}
-          {currentState && (
-            <div className="ensemble">
-              <h3>Ensemble Information & Prediction</h3>
-              <strong>Number of District Plans: </strong> 10000 <br />
-              <strong>Number of Incumbents: </strong> {count} <br />
-              <strong>Number of Incumbents Predicted to Win: </strong>{" "}
-              {count - 1} <br />
-              <img
-                src={imag}
-                alt="Ensemble Box and Whiskers"
-                style={{ width: "600px" }}
-              />{" "}
-              <br />
-              <img
-                src={seats}
-                alt="Open Seats"
-                style={{ width: "500px" }}
-              />{" "}
-              <br />
-            </div>
-          )}
+    <GlobalStoreContextProvider>
+      <div className="App">
+        <Map
+          currentState={currentState}
+          setCurrentState={setCurrentState}
+          currentDistrict={currentDistrict}
+          setCurrentDistrict={setCurrentDistrict}
+          selectedPlan={selectedPlan}
+          showIncumbents={showIncumbents}
+          setShowIncumbents={setShowIncumbents}
+        />
+        <DistrictPlanSelector
+          selectedPlan={selectedPlan}
+          setSelectedPlan={setSelectedPlan}
+          districtPlans={districtPlans}
+        />
+        {/* <h3 style={{ textAlign: "center", color: "firebrick" }}>
+          <strong>Team Hawks</strong>
+        </h3> */}
+        <div style={{ height: "100vh", overflow: "auto" }}>
+          <div className="data">
+            {currentState && (
+              <Table
+                currentState={currentState}
+                currentDistrict={currentDistrict}
+                setCurrentDistrict={setCurrentDistrict}
+              />
+            )}
+            {currentDistrict && (
+              <District
+                currentState={currentState}
+                currentDistrict={currentDistrict}
+              />
+            )}
+            {currentState && (
+              <div className="ensemble">
+                <h3>Ensemble Information & Prediction</h3>
+                <strong>Number of District Plans: </strong> 10000 <br />
+                <strong>Number of Incumbents: </strong> {count} <br />
+                <strong>Number of Incumbents Predicted to Win: </strong>{" "}
+                {count - 1} <br />
+                <img
+                  src={imag}
+                  alt="Ensemble Box and Whiskers"
+                  style={{ width: "600px" }}
+                />{" "}
+                <br />
+                <img
+                  src={seats}
+                  alt="Open Seats"
+                  style={{ width: "500px" }}
+                />{" "}
+                <br />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </GlobalStoreContextProvider>
   );
 };
 
