@@ -52,7 +52,8 @@ const Map = ({
     // getMessage();
 
     if (store.currentState === "FL") {
-      store.setState("FL");
+      console.log(store.currentState);
+      // store.setState("FL");
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
     } else if (store.currentState === "GA") {
@@ -76,7 +77,7 @@ const Map = ({
       }
     }
     setCurrentDistrict(null);
-  }, [store.currentState, selectedPlan]);
+  }, [store.currentState]);
 
   useEffect(() => {}, [currentDistrict]);
 
@@ -172,12 +173,12 @@ const Map = ({
   };
 
   const handleGeorgiaClicked = (feature, layer) => {
-    store.setState("GA");
     layer.on({
       click: (event) => {
         if (!georgiaRef.current) return;
 
         setCurrentState("georgia");
+        store.setState("GA");
 
         if (feature.geometry.type === "Polygon") {
           setCurrentDistrict(feature);
@@ -195,12 +196,12 @@ const Map = ({
   };
 
   const handlePennsylvaniaClicked = (feature, layer) => {
-    store.setState("PA");
     layer.on({
       click: (event) => {
         if (!pennsylvaniaRef) return;
 
         setCurrentState("pennsylvania");
+        store.setState("PA");
 
         if (feature.geometry.type === "Polygon") {
           setCurrentDistrict(feature);
@@ -219,15 +220,18 @@ const Map = ({
   const handleStateChange = (event) => {
     const state = event.target.value;
 
-    if (!state) {
-      store.setState("");
-      // setCurrentState("");
-    } else {
-      store.setState(state);
-      // setCurrentState(state);
-    }
+    console.log(state);
+
+    // if (!state) {
+    //   store.setState("");
+    //   // setCurrentState("");
+    // } else {
+    //   store.setState(state);
+    //   // setCurrentState(state);
+    // }
 
     if (state === "florida") {
+      store.setState("FL");
       const map = floridaRef.current.getLayers()[0]._map;
       map.flyTo([27.8, -83.5], 7, {
         duration: 1.5,
@@ -237,6 +241,7 @@ const Map = ({
     }
 
     if (state === "georgia") {
+      store.setState("GA");
       const map = georgiaRef.current.getLayers()[0]._map;
       map.flyTo([32.7, -83.2], 7, {
         duration: 1.5,
@@ -246,6 +251,7 @@ const Map = ({
     }
 
     if (state === "pennsylvania") {
+      store.setState("PA");
       const map = pennsylvaniaRef.current.getLayers()[0]._map;
       map.flyTo([41.203323, -77.194527], 7, {
         duration: 1.5,

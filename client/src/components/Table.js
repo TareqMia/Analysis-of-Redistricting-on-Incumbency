@@ -49,19 +49,23 @@ const Table = ({ currentState, currentDistrict, setCurrentDistrict }) => {
             currentDistrict &&
             currentDistrict.properties.DISTRICT === parseInt(val.District);
           return (
-            <tr
-              key={key}
-              onClick={() => handleRowClicked(val.District)}
-              style={{ background: isHighlighted ? "#FFFF8A" : "transparent" }}
-            >
-              <td>{val.Candidate}</td>
-              <td style={{ color: color }}>{val.Party}</td>
-              <td>{val["Primary Outcome"]}</td>
-              <td>{val.District}</td>
-              <td>{val.State}</td>
-              <td>{(Math.random() + 0.3).toFixed(1)}</td>
-              <td>{(Math.random() * 500 - 100).toFixed(1)}</td>
-            </tr>
+            <tbody>
+              <tr
+                key={key}
+                onClick={() => handleRowClicked(val.District)}
+                style={{
+                  background: isHighlighted ? "#FFFF8A" : "transparent",
+                }}
+              >
+                <td>{val.Candidate}</td>
+                <td style={{ color: color }}>{val.Party}</td>
+                <td>{val["Primary Outcome"]}</td>
+                <td>{val.District}</td>
+                <td>{val.State}</td>
+                <td>{(Math.random() + 0.3).toFixed(1)}</td>
+                <td>{(Math.random() * 500 - 100).toFixed(1)}</td>
+              </tr>
+            </tbody>
           );
         })}
       </table>

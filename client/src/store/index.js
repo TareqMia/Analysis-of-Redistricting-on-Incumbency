@@ -1,4 +1,4 @@
-import {createContext, useState} from 'react'
+import { createContext, useState } from "react";
 import flDemo from "../json/demo-data/Florida-Demographic.json";
 import gaDemo from "../json/demo-data/Georgia-Demographic.json";
 import paDemo from "../json/demo-data/Pennslyvania-Demographic.json";
@@ -25,76 +25,157 @@ import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.js
 import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
 import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 
+// export const GlobalStoreContext = createContext({});
+
+// export const GlobalStoreActionType = {
+//   SET_STATE: "SET_STATE",
+//   currentDistrict: "currentDistrict",
+//   showIncumbents: "showIncumbents",
+// };
+
+// function GlobalStoreContextProvider(props) {
+//   const [store, setStore] = useState({
+//     currentState: null,
+//     currentDistrict: null,
+//     showIncumbents: false,
+//   });
+
+//   const storeReducer = (action) => {
+//     const { type, payload } = action;
+//     switch (type) {
+//       case GlobalStoreActionType.currentState: {
+//         return setStore({
+//           currentState: payload.state,
+//           currentDistrict: null,
+//           showIncumbents: false,
+//         });
+//       }
+//       case GlobalStoreActionType.currentDistrict: {
+//         return setStore({
+//           currentState: null,
+//           currentDistrict: payload.district,
+//           showIncumbents: false,
+//         });
+//       }
+//       case GlobalStoreActionType.showIncumbents: {
+//         return setStore({
+//           currentState: null,
+//           currentDistrict: null,
+//           showIncumbents: true,
+//         });
+//       }
+//       default:
+//         return store;
+//     }
+//   };
+
+//   store.setState = (state) => {
+//     storeReducer({
+//       type: GlobalStoreActionType.SET_STATE,
+//       payload: {
+//         state: state,
+//       },
+//     });
+//   };
+
+//   store.setDistrict = (district) => {
+//     storeReducer({
+//       type: GlobalStoreActionType.SET_DISTRICT,
+//       payload: {
+//         district: district,
+//       },
+//     });
+//     console.log("MEI YO QIAN");
+//   };
+
+//   return (
+//     <GlobalStoreContext.Provider
+//       value={{
+//         store,
+//       }}
+//     >
+//       {props.children}
+//     </GlobalStoreContext.Provider>
+//   );
+// }
+
+// export default GlobalStoreContext;
+// export { GlobalStoreContextProvider };
+
+import { useReducer } from "react";
+
 export const GlobalStoreContext = createContext({});
 
 export const GlobalStoreActionType = {
-    currentState : "currentState",
-    currentDistrict: "currentDistrict",
-    showIncumbents: "showIncumbents"
-}
+  SET_STATE: "SET_STATE",
+  SET_DISTRICT: "SET_DISTRICT",
+  SHOW_INCUMBENTS: "SHOW_INCUMBENTS",
+};
 
 function GlobalStoreContextProvider(props) {
-    const [store, setStore] = useState({
-        currentState: null,
-        currentDistrict : null,
-        showIncumbents: false
-    });
-
-    const storeReducer = (action) => {
-        const { type, payload } = action;
-    switch (type) {
-        case GlobalStoreActionType.currentState: {
-            return setStore({
-                currentState: payload.state,
-                currentDistrict : null,
-                showIncumbents: false
-            })
+  const [store, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case GlobalStoreActionType.SET_STATE: {
+          return {
+            currentState: action.payload.state,
+            currentDistrict: null,
+            showIncumbents: false,
+          };
         }
-        case GlobalStoreActionType.currentDistrict: {
-            return setStore({
-                currentState: null,
-                currentDistrict : payload.district,
-                showIncumbents: false
-            })
+        case GlobalStoreActionType.SET_DISTRICT: {
+          return {
+            currentState: null,
+            currentDistrict: action.payload.district,
+            showIncumbents: false,
+          };
         }
-        case GlobalStoreActionType.showIncumbents: {
-            return setStore({
-                currentState: null,
-                currentDistrict : null,
-                showIncumbents: true
-            })
+        case GlobalStoreActionType.SHOW_INCUMBENTS: {
+          return {
+            currentState: null,
+            currentDistrict: null,
+            showIncumbents: true,
+          };
         }
         default:
-            return store; 
-    }}
-
-    store.setState = (state) => {
-        storeReducer({
-            type: GlobalStoreActionType.SET_STATE,
-            payload: {
-                state: state
-            }
-        });
-        console.log("tareq evelyn mia");
+          return state;
+      }
+    },
+    {
+      currentState: null,
+      currentDistrict: null,
+      showIncumbents: false,
     }
+  );
 
-    store.setDistrict = (district) => {
-        storeReducer({
-            type: GlobalStoreActionType.SET_DISTRICT,
-            payload: {
-                district: district
-            }
-        });
-        console.log("MEI YO QIAN");
-    }
+  store.setState = (state) => {
+    console.log(store.currentState);
+    dispatch({
+      type: GlobalStoreActionType.SET_STATE,
+      payload: {
+        state: state,
+      },
+    });
+  };
 
-    return (
-        <GlobalStoreContext.Provider value={{
-            store
-        }}>
-            {props.children}
-        </GlobalStoreContext.Provider>
-    );
+  store.setDistrict = (district) => {
+    dispatch({
+      type: GlobalStoreActionType.SET_DISTRICT,
+      payload: {
+        district: district,
+      },
+    });
+  };
+
+  return (
+    <GlobalStoreContext.Provider
+      value={{
+        store,
+      }}
+    >
+      {props.children}
+    </GlobalStoreContext.Provider>
+  );
 }
 
 export default GlobalStoreContext;
