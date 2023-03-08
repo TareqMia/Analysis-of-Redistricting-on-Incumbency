@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useReducer } from "react";
 import flDemo from "../json/demo-data/Florida-Demographic.json";
 import gaDemo from "../json/demo-data/Georgia-Demographic.json";
 import paDemo from "../json/demo-data/Pennslyvania-Demographic.json";
@@ -25,8 +25,6 @@ import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.js
 import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
 import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 
-import { useReducer } from "react";
-
 export const GlobalStoreContext = createContext({});
 
 export const GlobalStoreActionType = {
@@ -41,23 +39,20 @@ function GlobalStoreContextProvider(props) {
       switch (action.type) {
         case GlobalStoreActionType.SET_STATE: {
           return {
+            ...state,
             currentState: action.payload.state,
-            currentDistrict: null,
-            showIncumbents: false,
           };
         }
         case GlobalStoreActionType.SET_DISTRICT: {
           return {
-            currentState: null,
+            ...state,
             currentDistrict: action.payload.district,
-            showIncumbents: false,
           };
         }
         case GlobalStoreActionType.SHOW_INCUMBENTS: {
           return {
-            currentState: null,
-            currentDistrict: null,
-            showIncumbents: true,
+            ...state,
+            showIncumbents: action.payload.showIncumbents,
           };
         }
         default:
@@ -72,7 +67,7 @@ function GlobalStoreContextProvider(props) {
   );
 
   store.setState = (state) => {
-    console.log(store.currentState);
+    console.log(state);
     dispatch({
       type: GlobalStoreActionType.SET_STATE,
       payload: {
@@ -82,10 +77,21 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.setDistrict = (district) => {
+    console.log(store.currentState);
+    console.log(district);
     dispatch({
       type: GlobalStoreActionType.SET_DISTRICT,
       payload: {
         district: district,
+      },
+    });
+  };
+
+  store.setShowIncumbents = (value) => {
+    dispatch({
+      type: GlobalStoreActionType.SHOW_INCUMBENTS,
+      payload: {
+        showIncumbents: value,
       },
     });
   };

@@ -24,15 +24,7 @@ import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbe
 
 import axios from "axios";
 
-const Map = ({
-  currentState,
-  setCurrentState,
-  currentDistrict,
-  setCurrentDistrict,
-  selectedPlan,
-  showIncumbents,
-  setShowIncumbents,
-}) => {
+const Map = ({ currentState, currentDistrict, showIncumbents }) => {
   const floridaRef = useRef();
   const georgiaRef = useRef();
   const pennsylvaniaRef = useRef();
@@ -75,11 +67,11 @@ const Map = ({
         georgiaRef.current.clearLayers().addData(georgiaOutline);
         pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
       }
+      if (store) store.setDistrict(null);
     }
-    setCurrentDistrict(null);
-  }, [store.currentState]);
+  }, [store.currentState, store.currentDistrict]);
 
-  useEffect(() => {}, [currentDistrict]);
+  // useEffect(() => {}, [store.currentDistrict]);
 
   //   useEffect(() => {
   //     if (selectedPlan === "2020") {
@@ -143,8 +135,11 @@ const Map = ({
       click: (event) => {
         if (!floridaRef.current) return;
 
+        store.setState("FL");
+        store.setDistrict(null);
+
         if (feature.geometry.type === "Polygon") {
-          setCurrentDistrict(feature);
+          store.setDistrict(feature);
         }
 
         const map = event.target._map;
@@ -154,8 +149,7 @@ const Map = ({
         });
 
         floridaRef.current.clearLayers().addData(florida);
-        store.setState("FL");
-        setCurrentState("florida");
+        // setCurrentState("florida");
 
         layer.setStyle({
           fillColor: "white",
@@ -177,11 +171,12 @@ const Map = ({
       click: (event) => {
         if (!georgiaRef.current) return;
 
-        setCurrentState("georgia");
+        // setCurrentState("georgia");
         store.setState("GA");
+        store.setDistrict(null);
 
         if (feature.geometry.type === "Polygon") {
-          setCurrentDistrict(feature);
+          store.setDistrict(feature);
         }
 
         const map = event.target._map;
@@ -200,11 +195,12 @@ const Map = ({
       click: (event) => {
         if (!pennsylvaniaRef) return;
 
-        setCurrentState("pennsylvania");
+        // setCurrentState("pennsylvania");
         store.setState("PA");
+        store.setDistrict(null);
 
         if (feature.geometry.type === "Polygon") {
-          setCurrentDistrict(feature);
+          store.setDistrict(feature);
         }
 
         const map = event.target._map;
@@ -222,44 +218,45 @@ const Map = ({
 
     console.log(state);
 
-    // if (!state) {
-    //   store.setState("");
+    if (!state) {
+      store.setState("");
+    }
     //   // setCurrentState("");
     // } else {
     //   store.setState(state);
     //   // setCurrentState(state);
     // }
 
-    if (state === "florida") {
+    if (state === "FL") {
       store.setState("FL");
       const map = floridaRef.current.getLayers()[0]._map;
       map.flyTo([27.8, -83.5], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
-      setCurrentState("florida");
+      // setCurrentState("florida");
       floridaRef.current.clearLayers().addData(florida);
     }
 
-    if (state === "georgia") {
+    if (state === "GA") {
       store.setState("GA");
       const map = georgiaRef.current.getLayers()[0]._map;
       map.flyTo([32.7, -83.2], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
-      setCurrentState("georgia");
+      // setCurrentState("georgia");
       georgiaRef.current.clearLayers().addData(georgia);
     }
 
-    if (state === "pennsylvania") {
+    if (state === "PA") {
       store.setState("PA");
       const map = pennsylvaniaRef.current.getLayers()[0]._map;
       map.flyTo([41.203323, -77.194527], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
-      setCurrentState("pennsylvania");
+      // setCurrentState("pennsylvania");
       pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
     }
   };
@@ -293,7 +290,7 @@ const Map = ({
   const pennsylvaniaIncumbents = getIncumbents("pennsylvania");
 
   const handleShowIncumbents = (event) => {
-    setShowIncumbents(event.target.checked);
+    store.setShowIncumbents(event.target.checked);
   };
 
   return (
@@ -315,8 +312,8 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            currentDistrict &&
-            currentDistrict.properties.DISTRICT ===
+            store.currentDistrict &&
+            parseInt(store.currentDistrict.properties.DISTRICT) ===
               parseInt(feature.properties.DISTRICT)
               ? {
                   fillColor: "green",
@@ -328,10 +325,10 @@ const Map = ({
                   fillColor:
                     store.currentState !== "FL"
                       ? "grey"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         floridaIncumbents.includes(feature.properties.DISTRICT)
                       ? "purple"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         !floridaIncumbents.includes(feature.properties.DISTRICT)
                       ? "grey"
                       : floridaParties[feature.properties.DISTRICT - 1] ===
@@ -351,7 +348,7 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            currentDistrict && currentDistrict === feature
+            store.currentDistrict && store.currentDistrict === feature
               ? {
                   fillColor: "green",
                   fillOpacity: 0.5,
@@ -362,12 +359,12 @@ const Map = ({
                   fillColor:
                     store.currentState !== "GA"
                       ? "grey"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         georgiaIncumbents.includes(
                           parseInt(feature.properties.DISTRICT)
                         )
                       ? "purple"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         !georgiaIncumbents.includes(feature.properties.DISTRICT)
                       ? "grey"
                       : georgiaParties[feature.properties.DISTRICT - 1] ===
@@ -387,8 +384,9 @@ const Map = ({
         style={
           (stateOptions.style,
           (feature) =>
-            currentDistrict &&
-            currentDistrict.properties.DISTRICT === feature.properties.DISTRICT
+            store.currentDistrict &&
+            store.currentDistrict.properties.DISTRICT ===
+              feature.properties.DISTRICT
               ? {
                   fillColor: "green",
                   fillOpacity: 0.5,
@@ -399,12 +397,12 @@ const Map = ({
                   fillColor:
                     store.currentState !== "PA"
                       ? "grey"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         georgiaIncumbents.includes(
                           parseInt(feature.properties.DISTRICT)
                         )
                       ? "purple"
-                      : showIncumbents &&
+                      : store.showIncumbents &&
                         !pennsylvaniaIncumbents.includes(
                           feature.properties.DISTRICT
                         )
@@ -452,7 +450,7 @@ const Map = ({
         <input
           type="checkbox"
           name="public"
-          checked={showIncumbents}
+          checked={store.showIncumbents}
           onChange={handleShowIncumbents}
         />
         <label>Show Incumbents</label>

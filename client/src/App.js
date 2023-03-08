@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
@@ -6,11 +6,10 @@ import Table from "./components/Table";
 import DistrictPlanSelector from "./components/DistrictPlanSelector";
 import District from "./components/District";
 import { GlobalStoreContextProvider } from "./store";
+import GlobalStoreContext from "./store";
 
 const App = () => {
-  const [currentState, setCurrentState] = useState("");
-  const [currentDistrict, setCurrentDistrict] = useState(null);
-  const [showIncumbents, setShowIncumbents] = useState(false);
+  const { store } = useContext(GlobalStoreContext);
 
   const districtPlans = {
     2022: "2022",
@@ -20,68 +19,64 @@ const App = () => {
 
   const [selectedPlan, setSelectedPlan] = useState(districtPlans[2022]);
 
-  let imag = "";
-  let seats = "";
-  let count = 0;
-  if (currentState === "florida") {
-    imag =
-      "https://media.discordapp.net/attachments/1080353490171346954/1080779222857031751/florida.png";
-    seats =
-      "https://cdn.discordapp.com/attachments/1080353490171346954/1080772506782269552/image.png";
-    count = 23;
-  }
-  if (currentState === "georgia") {
-    imag =
-      "https://media.discordapp.net/attachments/1080353490171346954/1080779222617948160/georgia.png";
-    seats =
-      "https://cdn.discordapp.com/attachments/1080353490171346954/1080774201578885200/image.png";
-    count = 13;
-  }
-  if (currentState === "pennsylvania") {
-    imag =
-      "https://media.discordapp.net/attachments/1080353490171346954/1080779222425018409/pennsylvania.png";
-    seats =
-      "https://cdn.discordapp.com/attachments/1080353490171346954/1080773577260937266/image.png";
-    count = 16;
-  }
+  const [imag, setImag] = useState("");
+  const [seats, setSeats] = useState("");
+  const [count, setCount] = useState(0);
 
-  // console.log(currentDistrict);
+  // useEffect(() => {
+  //   if (store && store.currentState === "FL") {
+  //     setImag(
+  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222857031751/florida.png"
+  //     );
+  //     setSeats(
+  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080772506782269552/image.png"
+  //     );
+  //     setCount(23);
+  //   }
+  //   if (store && store.currentState === "GA") {
+  //     setImag(
+  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222617948160/georgia.png"
+  //     );
+  //     setSeats(
+  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080774201578885200/image.png"
+  //     );
+  //     setCount(13);
+  //   }
+  //   if (store && store.currentState === "PA") {
+  //     setImag(
+  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222425018409/pennsylvania.png"
+  //     );
+  //     setSeats(
+  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080773577260937266/image.png"
+  //     );
+  //     setCount(16);
+  //   }
+  // }, []);
+
   return (
-    <GlobalStoreContextProvider>
+    <GlobalStoreContextProvider value={{ store }}>
       <div className="App">
         <Map
-          currentState={currentState}
-          setCurrentState={setCurrentState}
-          currentDistrict={currentDistrict}
-          setCurrentDistrict={setCurrentDistrict}
-          selectedPlan={selectedPlan}
-          showIncumbents={showIncumbents}
-          setShowIncumbents={setShowIncumbents}
+          currentState={store ? store.currentState : null}
+          setCurrentState={store ? store.setCurrentState : ""}
+          currentDistrict={store ? store.currentDistrict : ""}
+          showIncumbents={store ? store.showIncumbents : false}
         />
         <DistrictPlanSelector
           selectedPlan={selectedPlan}
           setSelectedPlan={setSelectedPlan}
           districtPlans={districtPlans}
         />
-        {/* <h3 style={{ textAlign: "center", color: "firebrick" }}>
-          <strong>Team Hawks</strong>
-        </h3> */}
         <div style={{ height: "100vh", overflow: "auto" }}>
           <div className="data">
-            {currentState && (
-              <Table
-                currentState={currentState}
-                currentDistrict={currentDistrict}
-                setCurrentDistrict={setCurrentDistrict}
-              />
-            )}
-            {currentDistrict && (
-              <District
-                currentState={currentState}
-                currentDistrict={currentDistrict}
-              />
-            )}
-            {currentState && (
+            <Table currentState={store ? store.currentState : ""} />
+
+            <District
+              currentState={store ? store.currentState : ""}
+              currentDistrict={store ? store.currentDistrict : ""}
+            />
+
+            {store && store.currentState && (
               <div className="ensemble">
                 <h3>Ensemble Information & Prediction</h3>
                 <strong>Number of District Plans: </strong> 10000 <br />
