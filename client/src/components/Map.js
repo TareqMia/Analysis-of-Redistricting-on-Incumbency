@@ -435,9 +435,9 @@ const Map = ({
         <option className="item" value="">
           Select a state
         </option>
-        <option value="florida">Florida</option>
-        <option value="georgia">Georgia</option>
-        <option value="pennsylvania">Pennsylvania</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="PA">Pennsylvania</option>
       </select>
 
       <div

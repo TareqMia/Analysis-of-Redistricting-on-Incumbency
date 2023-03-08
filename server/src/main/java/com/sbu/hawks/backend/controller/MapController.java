@@ -1,6 +1,7 @@
 package com.sbu.hawks.backend.controller;
 
 
+import com.sbu.hawks.backend.model.State;
 import com.sbu.hawks.backend.service.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MapController {
 
     @GetMapping("/GA")
     @ResponseBody
-    String getGeorgia() {
-        return "Georgia";
+    State getGeorgia() {
+        return new State("Florida", null);
     }
 }
