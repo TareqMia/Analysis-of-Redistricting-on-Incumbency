@@ -18,20 +18,20 @@ const Table = ({ currentState }) => {
 
   if (store.currentState != null) {
     let tablinks = document.getElementsByClassName("tablinks");
-      for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.display = "block";
-      }
+    for (var i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.display = "block";
+    }
   } else {
     let tablinks = document.getElementsByClassName("tablinks");
-      for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.display = "none";
-      }
+    for (var i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.display = "none";
+    }
   }
 
   if (store) {
     if (store.currentDistrict) {
       if (store.currentDistrict.properties.DISTRICT) {
-      document.getElementById("dist-tab").style.display = "block";
+        document.getElementById("dist-tab").style.display = "block";
       } else {
         document.getElementById("dist-tab").style.display = "none";
       }
@@ -39,7 +39,6 @@ const Table = ({ currentState }) => {
   }
 
   useEffect(() => {
-    
     if (store.currentState === "FL") {
       setData(flCandidates);
     }
@@ -98,6 +97,7 @@ const Table = ({ currentState }) => {
               })}
             </tbody>
           </table>
+          <div>{store && store.geoJson ? `${store.geoJson.name}` : ""}</div>
         </div>
       )}
     </>

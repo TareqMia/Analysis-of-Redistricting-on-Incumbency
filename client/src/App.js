@@ -85,26 +85,47 @@ const App = () => {
         <div style={{ height: "100vh", overflow: "auto" }}>
           <div className="data">
             <div className="tab">
-              <button className="tablinks" display="none" 
-                onClick={(event) => openTab(event, 'winners-tab')}>District Winners</button>
-              <button id="dist-tab" className="tablinks" display="none"
-                onClick={(event) => openTab(event, 'district-tab')}>District Details</button>
-              <button className="tablinks" display="none"
-                onClick={(event) => openTab(event, 'ensemble-tab')}>Ensemble Information</button>
+              <button
+                className="tablinks"
+                display="none"
+                onClick={(event) => openTab(event, "winners-tab")}
+              >
+                District Winners
+              </button>
+              <button
+                id="dist-tab"
+                className="tablinks"
+                display="none"
+                onClick={(event) => openTab(event, "district-tab")}
+              >
+                District Details
+              </button>
+              <button
+                className="tablinks"
+                display="none"
+                onClick={(event) => openTab(event, "ensemble-tab")}
+              >
+                Ensemble Information
+              </button>
 
-              <button className="tablinks" display="none"
-                onClick={(event) => openTab(event, 'incumbent-tab')}>Incumbents vs. Open Seats</button>
+              <button
+                className="tablinks"
+                display="none"
+                onClick={(event) => openTab(event, "incumbent-tab")}
+              >
+                Incumbents vs. Open Seats
+              </button>
             </div>
-          
+
             <div id="winners-tab" className="tabcontent">
-            <Table currentState={store ? store.currentState : ""} />
+              <Table currentState={store ? store.currentState : ""} />
             </div>
 
             <div id="district-tab" className="tabcontent">
-            <District
-              currentState={store ? store.currentState : ""}
-              currentDistrict={store ? store.currentDistrict : ""}
-            />
+              <District
+                currentState={store ? store.currentState : ""}
+                currentDistrict={store ? store.currentDistrict : ""}
+              />
             </div>
 
             <div id="ensemble-tab" className="tabcontent">
@@ -124,11 +145,7 @@ const App = () => {
 
             <div id="incumbent-tab" className="tabcontent">
               <div className="ensemble">
-                <img
-                  src={seats}
-                  alt="Open Seats"
-                  style={{ width: "500px" }}
-              />{" "}
+                <img src={seats} alt="Open Seats" style={{ width: "500px" }} />{" "}
               </div>
             </div>
           </div>

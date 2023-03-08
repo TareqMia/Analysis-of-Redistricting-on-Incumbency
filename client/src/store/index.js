@@ -24,6 +24,7 @@ import pennsylvania_districts from "../json/districts-winners/Pennslyvania-Distr
 import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.json";
 import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
 import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
+import api from "./store-request-api";
 
 export const GlobalStoreContext = createContext({});
 
@@ -31,6 +32,7 @@ export const GlobalStoreActionType = {
   SET_STATE: "SET_STATE",
   SET_DISTRICT: "SET_DISTRICT",
   SHOW_INCUMBENTS: "SHOW_INCUMBENTS",
+  SET_GEOJSON: "SET_GEOJSON",
 };
 
 function GlobalStoreContextProvider(props) {
@@ -41,6 +43,7 @@ function GlobalStoreContextProvider(props) {
           return {
             ...state,
             currentState: action.payload.state,
+            geoJson: action.payload.geoJson,
           };
         }
         case GlobalStoreActionType.SET_DISTRICT: {
@@ -55,6 +58,12 @@ function GlobalStoreContextProvider(props) {
             showIncumbents: action.payload.showIncumbents,
           };
         }
+        case GlobalStoreActionType.SET_GEOJSON: {
+          return {
+            ...state,
+            geojson: action.payload.geojson,
+          };
+        }
         default:
           return state;
       }
@@ -63,22 +72,23 @@ function GlobalStoreContextProvider(props) {
       currentState: null,
       currentDistrict: null,
       showIncumbents: false,
+      geoJson: null,
     }
   );
 
   store.setState = (state) => {
     console.log(state);
+    let data = store.fetchGeojson(state);
     dispatch({
       type: GlobalStoreActionType.SET_STATE,
       payload: {
         state: state,
+        geoJson: data,
       },
     });
   };
 
   store.setDistrict = (district) => {
-    console.log(store.currentState);
-    console.log(district);
     dispatch({
       type: GlobalStoreActionType.SET_DISTRICT,
       payload: {
@@ -94,6 +104,25 @@ function GlobalStoreContextProvider(props) {
         showIncumbents: value,
       },
     });
+  };
+
+  store.fetchGeojson = (state) => {
+    const asyncFetchGeojson = async (state) => {
+      try {
+        const response = await api.getMapGeoJson(state);
+        console.log(response.data);
+        return response.data;
+        // dispatch({
+        //   type: GlobalStoreActionType.SET_GEOJSON,
+        //   payload: {
+        //     geojson: response.data,
+        //   },
+        // });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    asyncFetchGeojson(state);
   };
 
   return (

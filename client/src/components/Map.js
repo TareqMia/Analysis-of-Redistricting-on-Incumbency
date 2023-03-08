@@ -49,11 +49,11 @@ const Map = ({ currentState, currentDistrict, showIncumbents }) => {
       georgiaRef.current.clearLayers().addData(georgiaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
     } else if (store.currentState === "GA") {
-      store.setState("GA");
+      // store.setState("GA");
       floridaRef.current.clearLayers().addData(floridaOutline);
       pennsylvaniaRef.current.clearLayers().addData(pennsylvaniaOutline);
     } else if (store.currentState === "PA") {
-      store.setState("PA");
+      // store.setState("PA");
       floridaRef.current.clearLayers().addData(floridaOutline);
       georgiaRef.current.clearLayers().addData(georgiaOutline);
     } else {
@@ -130,7 +130,7 @@ const Map = ({ currentState, currentDistrict, showIncumbents }) => {
     },
   };
 
-  const handleFloridaClicked = (feature, layer) => {
+  const handleFloridaClicked = async (feature, layer) => {
     layer.on({
       click: (event) => {
         if (!floridaRef.current) return;
@@ -422,7 +422,7 @@ const Map = ({ currentState, currentDistrict, showIncumbents }) => {
       <select
         className="ui selection dropdown"
         onChange={handleStateChange}
-        value={store.currentState}
+        value={store ? store.currentState : ""}
         style={{
           position: "absolute",
           top: "10px",
