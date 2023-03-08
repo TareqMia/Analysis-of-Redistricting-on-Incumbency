@@ -42,7 +42,6 @@ const Map = ({
   const [florida, setFlorida] = useState(florida_2022);
   const [georgia, setGeorgia] = useState(georgia_2022);
   const [pennsylvania, setPennsylvania] = useState(pennsylvania_2022);
-  const [selectedState, setSelectedState] = useState(store.currentState);
 
   const getMessage = async () => {
     const result = await axios.get("http://localhost:8080/api/map/GA");
@@ -221,9 +220,7 @@ const Map = ({
   const handleStateChange = (event) => {
     const state = event.target.value;
 
-    if (!state) {
-      store.setState("");
-    }
+    console.log(state);
 
     // if (!state) {
     //   store.setState("");
@@ -233,33 +230,36 @@ const Map = ({
     //   // setCurrentState(state);
     // }
 
-    if (state === "FL") {
+    if (state === "florida") {
       store.setState("FL");
       const map = floridaRef.current.getLayers()[0]._map;
       map.flyTo([27.8, -83.5], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
+      setCurrentState("florida");
       floridaRef.current.clearLayers().addData(florida);
     }
 
-    if (state === "GA") {
+    if (state === "georgia") {
       store.setState("GA");
       const map = georgiaRef.current.getLayers()[0]._map;
       map.flyTo([32.7, -83.2], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
+      setCurrentState("georgia");
       georgiaRef.current.clearLayers().addData(georgia);
     }
 
-    if (state === "PA") {
+    if (state === "pennsylvania") {
       store.setState("PA");
       const map = pennsylvaniaRef.current.getLayers()[0]._map;
       map.flyTo([41.203323, -77.194527], 7, {
         duration: 1.5,
         easeLinearity: 0.2,
       });
+      setCurrentState("pennsylvania");
       pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
     }
   };
@@ -435,9 +435,9 @@ const Map = ({
         <option className="item" value="">
           Select a state
         </option>
-        <option value="FL">Florida</option>
-        <option value="GA">Georgia</option>
-        <option value="PA">Pennsylvania</option>
+        <option value="florida">Florida</option>
+        <option value="georgia">Georgia</option>
+        <option value="pennsylvania">Pennsylvania</option>
       </select>
 
       <div
