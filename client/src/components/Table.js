@@ -16,7 +16,30 @@ const Table = ({ currentState }) => {
     });
   };
 
+  if (store.currentState != null) {
+    let tablinks = document.getElementsByClassName("tablinks");
+      for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.display = "block";
+      }
+  } else {
+    let tablinks = document.getElementsByClassName("tablinks");
+      for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.display = "none";
+      }
+  }
+
+  if (store) {
+    if (store.currentDistrict) {
+      if (store.currentDistrict.properties.DISTRICT) {
+      document.getElementById("dist-tab").style.display = "block";
+      } else {
+        document.getElementById("dist-tab").style.display = "none";
+      }
+    }
+  }
+
   useEffect(() => {
+    
     if (store.currentState === "FL") {
       setData(flCandidates);
     }
@@ -26,7 +49,6 @@ const Table = ({ currentState }) => {
     if (store.currentState === "PA") {
       setData(paCandidates);
     }
-
     if (currentState === null) {
       setData([]);
     }

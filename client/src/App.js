@@ -23,6 +23,20 @@ const App = () => {
   const [seats, setSeats] = useState("");
   const [count, setCount] = useState(0);
 
+  function openTab(event, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    event.currentTarget.className += " active";
+  }
+
   // useEffect(() => {
   //   if (store && store.currentState === "FL") {
   //     setImag(
@@ -67,16 +81,33 @@ const App = () => {
           setSelectedPlan={setSelectedPlan}
           districtPlans={districtPlans}
         />
+
         <div style={{ height: "100vh", overflow: "auto" }}>
           <div className="data">
-            <Table currentState={store ? store.currentState : ""} />
+            <div className="tab">
+              <button className="tablinks" display="none" 
+                onClick={(event) => openTab(event, 'winners-tab')}>District Winners</button>
+              <button id="dist-tab" className="tablinks" display="none"
+                onClick={(event) => openTab(event, 'district-tab')}>District Details</button>
+              <button className="tablinks" display="none"
+                onClick={(event) => openTab(event, 'ensemble-tab')}>Ensemble Information</button>
 
+              <button className="tablinks" display="none"
+                onClick={(event) => openTab(event, 'incumbent-tab')}>Incumbents vs. Open Seats</button>
+            </div>
+          
+            <div id="winners-tab" className="tabcontent">
+            <Table currentState={store ? store.currentState : ""} />
+            </div>
+
+            <div id="district-tab" className="tabcontent">
             <District
               currentState={store ? store.currentState : ""}
               currentDistrict={store ? store.currentDistrict : ""}
             />
+            </div>
 
-            {store && store.currentState && (
+            <div id="ensemble-tab" className="tabcontent">
               <div className="ensemble">
                 <h3>Ensemble Information & Prediction</h3>
                 <strong>Number of District Plans: </strong> 10000 <br />
@@ -88,15 +119,18 @@ const App = () => {
                   alt="Ensemble Box and Whiskers"
                   style={{ width: "600px" }}
                 />{" "}
-                <br />
+              </div>
+            </div>
+
+            <div id="incumbent-tab" className="tabcontent">
+              <div className="ensemble">
                 <img
                   src={seats}
                   alt="Open Seats"
                   style={{ width: "500px" }}
-                />{" "}
-                <br />
+              />{" "}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
