@@ -1,7 +1,5 @@
 package com.sbu.hawks.backend.controller;
 
-
-import com.sbu.hawks.backend.model.State;
 import com.sbu.hawks.backend.service.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,22 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/map")
 public class MapController {
 
-    private MapService mapService;
+    private final MapService mapService;
 
     @Autowired
     public MapController(MapService service) {
         this.mapService = service;
     }
 
-    @GetMapping("/FL")
+    @GetMapping("/{state}")
     @ResponseBody
-    String getFlorida() {
-        return "testing from 3000";
-    }
-
-    @GetMapping("/GA")
-    @ResponseBody
-    State getGeorgia() {
-        return new State("Florida", null);
+    State getStateGeoJson(@PathVariable String state) {
+        return new State(state, null, mapService.getStateGeoJson(state));
     }
 }

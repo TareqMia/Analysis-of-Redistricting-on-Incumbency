@@ -1,1 +1,142 @@
-[{"District":1,"Total Population":776100,"White":454004,"Black or African American":222404,"American Indian and Alaska Native":3223,"Asian":15444,"Native Hawaiian and Other Pacific Islander":780,"Other":14358},{"District":2,"Total Population":769411,"White":323404,"Black or African American":369043,"American Indian and Alaska Native":2389,"Asian":10963,"Native Hawaiian and Other Pacific Islander":575,"Other":21281},{"District":3,"Total Population":773245,"White":506115,"Black or African American":173605,"American Indian and Alaska Native":2655,"Asian":13372,"Native Hawaiian and Other Pacific Islander":51,"Other":19257},{"District":4,"Total Population":756440,"White":207637,"Black or African American":412624,"American Indian and Alaska Native":1855,"Asian":42476,"Native Hawaiian and Other Pacific Islander":426,"Other":23689},{"District":5,"Total Population":765685,"White":293180,"Black or African American":357982,"American Indian and Alaska Native":2529,"Asian":35013,"Native Hawaiian and Other Pacific Islander":656,"Other":18853},{"District":6,"Total Population":780668,"White":511700,"Black or African American":65017,"American Indian and Alaska Native":5007,"Asian":93307,"Native Hawaiian and Other Pacific Islander":0,"Other":21682},{"District":7,"Total Population":749673,"White":242948,"Black or African American":220704,"American Indian and Alaska Native":6385,"Asian":94597,"Native Hawaiian and Other Pacific Islander":412,"Other":78878},{"District":8,"Total Population":760317,"White":444214,"Black or African American":233143,"American Indian and Alaska Native":3515,"Asian":13105,"Native Hawaiian and Other Pacific Islander":221,"Other":13267},{"District":9,"Total Population":797012,"White":522509,"Black or African American":88723,"American Indian and Alaska Native":3402,"Asian":54094,"Native Hawaiian and Other Pacific Islander":89,"Other":34001},{"District":10,"Total Population":790768,"White":506152,"Black or African American":175426,"American Indian and Alaska Native":3643,"Asian":19187,"Native Hawaiian and Other Pacific Islander":83,"Other":24420},{"District":11,"Total Population":772858,"White":495217,"Black or African American":124373,"American Indian and Alaska Native":8610,"Asian":25775,"Native Hawaiian and Other Pacific Islander":710,"Other":42496},{"District":12,"Total Population":766372,"White":401767,"Black or African American":274470,"American Indian and Alaska Native":1478,"Asian":12215,"Native Hawaiian and Other Pacific Islander":152,"Other":23981},{"District":13,"Total Population":763561,"White":139003,"Black or African American":499617,"American Indian and Alaska Native":1498,"Asian":27760,"Native Hawaiian and Other Pacific Islander":1153,"Other":33987},{"District":14,"Total Population":777456,"White":554478,"Black or African American":106769,"American Indian and Alaska Native":7453,"Asian":8572,"Native Hawaiian and Other Pacific Islander":145,"Other":32692}]
+[
+  {
+    "District": 1,
+    "Total Population": 776100,
+    "White": 454004,
+    "Black or African American": 222404,
+    "American Indian and Alaska Native": 3223,
+    "Asian": 15444,
+    "Native Hawaiian and Other Pacific Islander": 780,
+    "Other": 14358
+  },
+  {
+    "District": 2,
+    "Total Population": 769411,
+    "White": 323404,
+    "Black or African American": 369043,
+    "American Indian and Alaska Native": 2389,
+    "Asian": 10963,
+    "Native Hawaiian and Other Pacific Islander": 575,
+    "Other": 21281
+  },
+  {
+    "District": 3,
+    "Total Population": 773245,
+    "White": 506115,
+    "Black or African American": 173605,
+    "American Indian and Alaska Native": 2655,
+    "Asian": 13372,
+    "Native Hawaiian and Other Pacific Islander": 51,
+    "Other": 19257
+  },
+  {
+    "District": 4,
+    "Total Population": 756440,
+    "White": 207637,
+    "Black or African American": 412624,
+    "American Indian and Alaska Native": 1855,
+    "Asian": 42476,
+    "Native Hawaiian and Other Pacific Islander": 426,
+    "Other": 23689
+  },
+  {
+    "District": 5,
+    "Total Population": 765685,
+    "White": 293180,
+    "Black or African American": 357982,
+    "American Indian and Alaska Native": 2529,
+    "Asian": 35013,
+    "Native Hawaiian and Other Pacific Islander": 656,
+    "Other": 18853
+  },
+  {
+    "District": 6,
+    "Total Population": 780668,
+    "White": 511700,
+    "Black or African American": 65017,
+    "American Indian and Alaska Native": 5007,
+    "Asian": 93307,
+    "Native Hawaiian and Other Pacific Islander": 0,
+    "Other": 21682
+  },
+  {
+    "District": 7,
+    "Total Population": 749673,
+    "White": 242948,
+    "Black or African American": 220704,
+    "American Indian and Alaska Native": 6385,
+    "Asian": 94597,
+    "Native Hawaiian and Other Pacific Islander": 412,
+    "Other": 78878
+  },
+  {
+    "District": 8,
+    "Total Population": 760317,
+    "White": 444214,
+    "Black or African American": 233143,
+    "American Indian and Alaska Native": 3515,
+    "Asian": 13105,
+    "Native Hawaiian and Other Pacific Islander": 221,
+    "Other": 13267
+  },
+  {
+    "District": 9,
+    "Total Population": 797012,
+    "White": 522509,
+    "Black or African American": 88723,
+    "American Indian and Alaska Native": 3402,
+    "Asian": 54094,
+    "Native Hawaiian and Other Pacific Islander": 89,
+    "Other": 34001
+  },
+  {
+    "District": 10,
+    "Total Population": 790768,
+    "White": 506152,
+    "Black or African American": 175426,
+    "American Indian and Alaska Native": 3643,
+    "Asian": 19187,
+    "Native Hawaiian and Other Pacific Islander": 83,
+    "Other": 24420
+  },
+  {
+    "District": 11,
+    "Total Population": 772858,
+    "White": 495217,
+    "Black or African American": 124373,
+    "American Indian and Alaska Native": 8610,
+    "Asian": 25775,
+    "Native Hawaiian and Other Pacific Islander": 710,
+    "Other": 42496
+  },
+  {
+    "District": 12,
+    "Total Population": 766372,
+    "White": 401767,
+    "Black or African American": 274470,
+    "American Indian and Alaska Native": 1478,
+    "Asian": 12215,
+    "Native Hawaiian and Other Pacific Islander": 152,
+    "Other": 23981
+  },
+  {
+    "District": 13,
+    "Total Population": 763561,
+    "White": 139003,
+    "Black or African American": 499617,
+    "American Indian and Alaska Native": 1498,
+    "Asian": 27760,
+    "Native Hawaiian and Other Pacific Islander": 1153,
+    "Other": 33987
+  },
+  {
+    "District": 14,
+    "Total Population": 777456,
+    "White": 554478,
+    "Black or African American": 106769,
+    "American Indian and Alaska Native": 7453,
+    "Asian": 8572,
+    "Native Hawaiian and Other Pacific Islander": 145,
+    "Other": 32692
+  }
+]

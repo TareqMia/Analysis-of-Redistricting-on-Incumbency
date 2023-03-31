@@ -6,41 +6,69 @@ import java.awt.Polygon;
 import java.util.List;
 
 public class District {
+    private int districtNumber;
+    private StateCode stateCode;
+    private Candidate candidate;
+    private double geographicVariation;
+    private double populationVariation;
+    private List<Precinct> precincts;
 
-    private String state;
-    private int districtNum;
-    @JsonIgnore
-    private List<Polygon> boundaryData;
-
-
-    public District(String state, int districtNum, List<Polygon> boundaryData) {
-        this.state = state;
-        this.districtNum = districtNum;
-        this.boundaryData = boundaryData;
+    public District(int districtNumber, StateCode stateCode, Candidate candidate, double geographicVariation,
+                    double populationVariation, List<Precinct> precincts) {
+        this.districtNumber = districtNumber;
+        this.stateCode = stateCode;
+        this.candidate = candidate;
+        this.geographicVariation = geographicVariation;
+        this.populationVariation = populationVariation;
+        this.precincts = precincts;
     }
 
-    public int getDistrictNum() {
-        return districtNum;
+    public int getDistrictNumber() {
+        return districtNumber;
     }
 
-    public List<Polygon> getBoundaryData() {
-        return boundaryData;
+    public void setDistrictNumber(int districtNumber) {
+        this.districtNumber = districtNumber;
     }
 
-    public String getState() {
-        return state;
+    public StateCode getStateCode() {
+        return stateCode;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStateCode(StateCode stateCode) {
+        this.stateCode = stateCode;
     }
 
-    public void setDistrictNum(int districtNum) {
-        this.districtNum = districtNum;
+    public Candidate getCandidate() {
+        return candidate;
     }
 
-    public void setBoundaryData(List<Polygon> boundaryData) {
-        this.boundaryData = boundaryData;
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
+
+    public double getGeographicVariation() {
+        return geographicVariation;
+    }
+
+    public void setGeographicVariation(double geographicVariation) {
+        this.geographicVariation = geographicVariation;
+    }
+
+    public double getPopulationVariation() {
+        return populationVariation;
+    }
+
+    public void setPopulationVariation(double populationVariation) {
+        this.populationVariation = populationVariation;
+    }
+
+    public List<Precinct> getPrecincts() {
+        return precincts;
+    }
+
+    public void setPrecincts(List<Precinct> precincts) {
+        this.precincts = precincts;
     }
 }
 

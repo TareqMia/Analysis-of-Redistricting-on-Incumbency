@@ -78,7 +78,9 @@ function GlobalStoreContextProvider(props) {
 
   store.setState = (state) => {
     console.log(state);
-    let data = store.fetchGeojson(state);
+    let data = store.fetchGeojson(state).then((data) => {
+      return data;
+    });
     dispatch({
       type: GlobalStoreActionType.SET_STATE,
       payload: {
@@ -112,17 +114,11 @@ function GlobalStoreContextProvider(props) {
         const response = await api.getMapGeoJson(state);
         console.log(response.data);
         return response.data;
-        // dispatch({
-        //   type: GlobalStoreActionType.SET_GEOJSON,
-        //   payload: {
-        //     geojson: response.data,
-        //   },
-        // });
       } catch (error) {
         console.error(error);
       }
     };
-    asyncFetchGeojson(state);
+    return asyncFetchGeojson(state);
   };
 
   return (

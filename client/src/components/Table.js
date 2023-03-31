@@ -97,7 +97,7 @@ const Table = ({ currentState }) => {
               })}
             </tbody>
           </table>
-          <div>{store && store.geoJson ? `${store.geoJson.name}` : ""}</div>
+          <div>{store.geoJson ? `${store.geoJson}` : "TESTING"}</div>
         </div>
       )}
     </>

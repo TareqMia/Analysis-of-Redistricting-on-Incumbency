@@ -1,6 +1,6 @@
 package com.sbu.hawks.backend.model;
 
-public enum States {
+public enum StateCode {
     FL,
     GA,
     PA
