@@ -1,17 +1,29 @@
 package com.sbu.hawks.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.awt.Polygon;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document(collection = "districts")
 public class District {
+    @Id
+    private String id;
     private int districtNumber;
     private StateCode stateCode;
+    @DBRef
     private Candidate candidate;
     private double geographicVariation;
     private double populationVariation;
+    @JsonIgnore
     private List<Precinct> precincts;
+
+    public District() {
+
+    }
 
     public District(int districtNumber, StateCode stateCode, Candidate candidate, double geographicVariation,
                     double populationVariation, List<Precinct> precincts) {
@@ -21,6 +33,7 @@ public class District {
         this.geographicVariation = geographicVariation;
         this.populationVariation = populationVariation;
         this.precincts = precincts;
+        this.id = districtNumber + "-" + stateCode.getStateCode();
     }
 
     public int getDistrictNumber() {
@@ -39,20 +52,20 @@ public class District {
         this.stateCode = stateCode;
     }
 
-    public Candidate getCandidate() {
-        return candidate;
-    }
-
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
-    }
-
     public double getGeographicVariation() {
         return geographicVariation;
     }
 
     public void setGeographicVariation(double geographicVariation) {
         this.geographicVariation = geographicVariation;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     public double getPopulationVariation() {

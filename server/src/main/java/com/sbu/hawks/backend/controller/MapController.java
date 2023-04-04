@@ -17,9 +17,9 @@ public class MapController {
         this.mapService = service;
     }
 
-    @GetMapping("/{state}")
-    @ResponseBody
-    State getStateGeoJson(@PathVariable String state) {
-        return new State(state, null, mapService.getStateGeoJson(state));
-    }
+//    @GetMapping("/{state}")
+//    @ResponseBody
+//    State getStateGeoJson(@PathVariable String state) {
+//        return new State(state, null, mapService.getStateGeoJson(state));
+//    }
 }

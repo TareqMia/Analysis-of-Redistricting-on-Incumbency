@@ -7,11 +7,11 @@ public class Precinct {
     private int precinctNumber;
     private String precinctName;
     private int populationCount;
-    private long geoCode;
+    private String geoCode;
     private int votingAgePopulation;
     private List<Map<Demographic,Integer>> demographic;
 
-    public Precinct(int precinctNumber, String precinctName, int populationCount, long geoCode,
+    public Precinct(int precinctNumber, String precinctName, int populationCount, String geoCode,
                     int votingAgePopulation, List<Map<Demographic, Integer>> demographic) {
         this.precinctNumber = precinctNumber;
         this.precinctName = precinctName;
@@ -45,11 +45,11 @@ public class Precinct {
         this.populationCount = populationCount;
     }
 
-    public long getGeoCode() {
+    public String getGeoCode() {
         return geoCode;
     }
 
-    public void setGeoCode(long geoCode) {
+    public void setGeoCode(String geoCode) {
         this.geoCode = geoCode;
     }
 

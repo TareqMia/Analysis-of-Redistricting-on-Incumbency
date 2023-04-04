@@ -1,68 +1,95 @@
 package com.sbu.hawks.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "candidates")
 public class Candidate {
-    private String candidateName;
-    private PoliticalParty candidateParty;
-    private StateCode candidateState;
-    private String districtNumber;
+    @Id
+    @JsonIgnore
+    private ObjectId id;
+    private String name;
+    private PoliticalParty party;
+    private StateCode stateCode;
+    private int districtNumber;
     private boolean isIncumbent;
     private ElectionResult electionResult;
 
-    public Candidate(String candidateName, PoliticalParty candidateParty, StateCode candidateState,
-                     String districtNumber, boolean isIncumbent, ElectionResult electionResult) {
-        this.candidateName = candidateName;
-        this.candidateParty = candidateParty;
-        this.candidateState = candidateState;
+    public Candidate(String name, PoliticalParty party, StateCode stateCode,
+                     int districtNumber, boolean isIncumbent, ElectionResult electionResult) {
+        this.name = name;
+        this.party = party;
+        this.stateCode = stateCode;
         this.districtNumber = districtNumber;
         this.isIncumbent = isIncumbent;
         this.electionResult = electionResult;
+        //this.id = name + "-" + stateCode.getStateCode() + "-" + districtNumber;
     }
 
-    public String getCandidateName() {
-        return candidateName;
+    public ObjectId getId() {
+        return id;
     }
 
-    public PoliticalParty getCandidateParty() {
-        return candidateParty;
+    public String getName() {
+        return name;
     }
 
-    public StateCode getCandidateState() {
-        return candidateState;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDistrictNumber() {
+    public PoliticalParty getParty() {
+        return party;
+    }
+
+    public void setParty(PoliticalParty party) {
+        this.party = party;
+    }
+
+    public StateCode getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(StateCode stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public int getDistrictNumber() {
         return districtNumber;
     }
 
-    public boolean isIncumbent() {
-        return isIncumbent;
-    }
-
-    public ElectionResult getElectionResult() {
-        return electionResult;
-    }
-
-    public void setCandidateName(String candidateName) {
-        this.candidateName = candidateName;
-    }
-
-    public void setCandidateParty(PoliticalParty candidateParty) {
-        this.candidateParty = candidateParty;
-    }
-
-    public void setCandidateState(StateCode candidateState) {
-        this.candidateState = candidateState;
-    }
-
-    public void setDistrictNumber(String districtNumber) {
+    public void setDistrictNumber(int districtNumber) {
         this.districtNumber = districtNumber;
+    }
+
+    public boolean getIsIncumbent() {
+        return isIncumbent;
     }
 
     public void setIncumbent(boolean incumbent) {
         isIncumbent = incumbent;
     }
 
+    public ElectionResult getElectionResult() {
+        return electionResult;
+    }
+
     public void setElectionResult(ElectionResult electionResult) {
         this.electionResult = electionResult;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", party=" + party +
+                ", stateCode=" + stateCode +
+                ", districtNumber=" + districtNumber +
+                ", isIncumbent=" + isIncumbent +
+                ", electionResult=" + electionResult +
+                '}';
     }
 }
