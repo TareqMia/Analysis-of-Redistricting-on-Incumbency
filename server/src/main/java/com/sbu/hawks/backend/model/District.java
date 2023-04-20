@@ -2,11 +2,14 @@ package com.sbu.hawks.backend.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 
 @Document(collection = "districts")
 public class District {
@@ -14,25 +17,31 @@ public class District {
     private String id;
     private int districtNumber;
     private StateCode stateCode;
+    private int populationTotal;
+    private float geographicTotal;
     @DBRef
-    private Candidate candidate;
+    private Map<Demographic, Integer> demoGraphicSummary;
     private double geographicVariation;
     private double populationVariation;
+    private String winner;
+    private Set<String> incumbents;
+    private PoliticalParty party;
     @JsonIgnore
-    private List<Precinct> precincts;
 
     public District() {
-
     }
 
-    public District(int districtNumber, StateCode stateCode, Candidate candidate, double geographicVariation,
-                    double populationVariation, List<Precinct> precincts) {
+    public District(int districtNumber, StateCode stateCode, int populationTotal, float geographicTotal, double geographicVariation,
+                    double populationVariation, String winner, PoliticalParty party) {
         this.districtNumber = districtNumber;
         this.stateCode = stateCode;
-        this.candidate = candidate;
         this.geographicVariation = geographicVariation;
         this.populationVariation = populationVariation;
-        this.precincts = precincts;
+        this.populationTotal = populationTotal;
+        this.geographicTotal = geographicTotal;
+        this.winner = winner;
+        this.incumbents = null;
+        this.party = party;
         this.id = districtNumber + "-" + stateCode.getStateCode();
     }
 
@@ -47,6 +56,14 @@ public class District {
     public StateCode getStateCode() {
         return stateCode;
     }
+    
+    public int getPopulationTotal() {
+        return this.populationTotal;
+    }
+
+    public float getGeographicTotal() {
+        return this.geographicTotal;
+    }
 
     public void setStateCode(StateCode stateCode) {
         this.stateCode = stateCode;
@@ -60,14 +77,6 @@ public class District {
         this.geographicVariation = geographicVariation;
     }
 
-    public Candidate getCandidate() {
-        return candidate;
-    }
-
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
-    }
-
     public double getPopulationVariation() {
         return populationVariation;
     }
@@ -76,12 +85,15 @@ public class District {
         this.populationVariation = populationVariation;
     }
 
-    public List<Precinct> getPrecincts() {
-        return precincts;
+    public String getWinner() {
+        return this.winner;
     }
 
-    public void setPrecincts(List<Precinct> precincts) {
-        this.precincts = precincts;
+    public Set<String> getIncumbents() {
+        return this.incumbents;
+    }
+
+    public PoliticalParty getParty() {
+        return this.party;
     }
 }
-

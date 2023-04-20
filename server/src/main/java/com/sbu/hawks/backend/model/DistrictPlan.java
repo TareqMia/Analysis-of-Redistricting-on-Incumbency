@@ -2,7 +2,10 @@ package com.sbu.hawks.backend.model;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 public class DistrictPlan {
+    @Id
     private StateCode stateCode;
     private List<District> districts;
     private String planName;

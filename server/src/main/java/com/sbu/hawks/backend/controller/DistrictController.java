@@ -1,9 +1,7 @@
 package com.sbu.hawks.backend.controller;
 
-import com.sbu.hawks.backend.model.Candidate;
 import com.sbu.hawks.backend.model.District;
 import com.sbu.hawks.backend.model.StateCode;
-import com.sbu.hawks.backend.service.CandidateService;
 import com.sbu.hawks.backend.service.DistrictService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +17,7 @@ public class DistrictController {
     private final DistrictService districtService;
 
 
-    public DistrictController(DistrictService districtService, CandidateService candidateService) {
+    public DistrictController(DistrictService districtService) {
         this.districtService = districtService;
     }
 
