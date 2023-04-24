@@ -22,6 +22,7 @@ const App = () => {
   const [imag, setImag] = useState("");
   const [seats, setSeats] = useState("");
   const [count, setCount] = useState(0);
+  const [activeTab, setActiveTab] = useState("winners-tab");
 
   function openTab(event, tabName) {
     var i, tabcontent, tablinks;
@@ -36,6 +37,10 @@ const App = () => {
     document.getElementById(tabName).style.display = "block";
     event.currentTarget.className += " active";
   }
+
+  // const openTab = (tabName) => {
+  //   setActiveTab(tabName);
+  // };
 
   // useEffect(() => {
   //   if (store && store.currentState === "FL") {
@@ -89,14 +94,23 @@ const App = () => {
                 className="tablinks"
                 display="none"
                 onClick={(event) => openTab(event, "winners-tab")}
+                // className={`tablinks${
+                //   activeTab === "winners-tab" ? " active" : ""
+                // }`}
+                // onClick={() => openTab("winners-tab")}
               >
                 District Winners
               </button>
               <button
+                // id="dist-tab"
+                // className="tablinks"
+                // display="none"
+                // onClick={(event) => openTab(event, "district-tab")}
                 id="dist-tab"
-                className="tablinks"
-                display="none"
-                onClick={(event) => openTab(event, "district-tab")}
+                className={`tablinks${
+                  activeTab === "district-tab" ? " active" : ""
+                }`}
+                onClick={() => openTab("district-tab")}
               >
                 District Details
               </button>

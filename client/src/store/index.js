@@ -72,20 +72,23 @@ function GlobalStoreContextProvider(props) {
       currentState: null,
       currentDistrict: null,
       showIncumbents: false,
+      districts: [],
       geoJson: null,
     }
   );
 
   store.setState = (state) => {
     console.log(state);
-    let data = store.fetchGeojson(state).then((data) => {
-      return data;
-    });
+    let districts = store.getDistricts(state);
+
+    // let data = store.fetchGeojson(state).then((data) => {
+    //   return data;
+    // });
     dispatch({
       type: GlobalStoreActionType.SET_STATE,
       payload: {
         state: state,
-        geoJson: data,
+        districts: districts,
       },
     });
   };
@@ -100,6 +103,8 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.setShowIncumbents = (value) => {
+    // fetch incumbents data
+
     dispatch({
       type: GlobalStoreActionType.SHOW_INCUMBENTS,
       payload: {
@@ -119,6 +124,18 @@ function GlobalStoreContextProvider(props) {
       }
     };
     return asyncFetchGeojson(state);
+  };
+
+  store.getDistricts = (state) => {
+    const asyncGetDistricts = async (state) => {
+      try {
+        const response = await api.getDistricts(state);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    asyncGetDistricts(state);
   };
 
   return (

@@ -8,13 +8,13 @@ import org.springframework.data.annotation.Id;
 public class State {
     @Id
     private StateCode stateCode;
-    private JsonObject currentDistrictPlan;
-    private Set<DistrictPlan> districtPlans;
-    private Ensemble ensemble;
+    private final JsonObject currentDistrictPlan;
+    private final Set<DistrictPlan> districtPlans;
+    private final Ensemble ensemble;
 
-    public State(StateCode stateCode, JsonObject districtplan) {
+    public State(StateCode stateCode, JsonObject districtPlan) {
         this.stateCode = stateCode;
-        this.currentDistrictPlan = districtplan;
+        this.currentDistrictPlan = districtPlan;
         this.districtPlans = null;
         this.ensemble = null;
     }

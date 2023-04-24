@@ -5,9 +5,12 @@ const api = axios.create({
 });
 
 export const getMapGeoJson = (stateCode) => api.get(`/map/${stateCode}`);
+export const getDistricts = (stateCode) =>
+  api.get(`/districts/incumbents/${stateCode}`);
 
 const apis = {
   getMapGeoJson,
+  getDistricts,
 };
 
 export default apis;
