@@ -6,5 +6,5 @@ import com.sbu.hawks.backend.model.State;
 import com.sbu.hawks.backend.model.StateCode;
 
 public interface EnsembleRepository extends MongoRepository<Ensemble, StateCode> {
-    EnsembleRepository getEnsembleByStateandStateCode(State state, StateCode stateCode);
+    EnsembleRepository getEnsembleByStateAndStateCode(State state, StateCode stateCode);
 }
