@@ -6,31 +6,41 @@ import flWinners from "../json/districts-winners/Florida-District-Winners-2022.j
 import gaWinners from "../json/districts-winners/Georgia-District-Winners-2022.json";
 import paWinners from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
 import GlobalStoreContext from "../store";
+import PieChart from "./PieChar";
 
 const District = ({ currentState, currentDistrict }) => {
   const [data, setData] = useState([]);
   const [dist, setDist] = useState(0);
-  const [candid, setCandid] = useState([]);
+  const [candidates, setCandidates] = useState([]);
 
   const { store } = useContext(GlobalStoreContext);
+
+  const pieData = [
+    { label: "Group A", value: 30 },
+    { label: "Group B", value: 50 },
+    { label: "Group C", value: 20 },
+  ];
+
+  console.log("DISTRICT DATA");
+  console.log(data);
 
   useEffect(() => {
     if (store.currentState === "FL") {
       setData(flDemo);
       if (store.currentDistrict !== null) {
-        setCandid(flWinners);
+        setCandidates(flWinners);
       }
     }
     if (store.currentState === "GA") {
       setData(gaDemo);
       if (store.currentDistrict !== null) {
-        setCandid(gaWinners);
+        setCandidates(gaWinners);
       }
     }
     if (store.currentState === "PA") {
       setData(paDemo);
       if (store.currentDistrict !== null) {
-        setCandid(paWinners);
+        setCandidates(paWinners);
       }
     }
 
@@ -41,17 +51,17 @@ const District = ({ currentState, currentDistrict }) => {
 
   useEffect(() => {
     if (store.currentDistrict && store.currentState === "FL") {
-      setCandid(
+      setCandidates(
         flWinners[parseInt(store.currentDistrict.properties.DISTRICT) - 1]
       );
     }
     if (store.currentDistrict && store.currentState === "GA") {
-      setCandid(
+      setCandidates(
         gaWinners[parseInt(store.currentDistrict.properties.DISTRICT) - 1]
       );
     }
     if (store.currentDistrict && store.currentState === "PA") {
-      setCandid(
+      setCandidates(
         paWinners[parseInt(store.currentDistrict.properties.DISTRICT) - 1]
       );
     }
@@ -69,10 +79,10 @@ const District = ({ currentState, currentDistrict }) => {
             ? `${store.currentDistrict.properties.DISTRICT}`
             : ""}
           <br />
-          <strong>Winner:</strong> {candid ? candid.Candidate : ""}
+          <strong>Winner:</strong> {candidates ? candidates.Candidate : ""}
           <br />
           <strong>2022 Congressional Result:</strong>{" "}
-          {candid ? candid.Party : ""}
+          {candidates ? candidates.Party : ""}
           <br />
           <table className="ui celled table">
             <tr>
@@ -123,6 +133,7 @@ const District = ({ currentState, currentDistrict }) => {
               }
             })}
           </table>
+          <PieChart data={pieData} />
         </div>
       )}
     </>

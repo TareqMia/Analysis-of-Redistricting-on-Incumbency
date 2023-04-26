@@ -7,6 +7,7 @@ import DistrictPlanSelector from "./components/DistrictPlanSelector";
 import District from "./components/District";
 import { GlobalStoreContextProvider } from "./store";
 import GlobalStoreContext from "./store";
+import BoxAndWhiskersPlot from "./components/BoxAndWhiskersPlot";
 
 const App = () => {
   const { store } = useContext(GlobalStoreContext);
@@ -37,6 +38,33 @@ const App = () => {
     document.getElementById(tabName).style.display = "block";
     event.currentTarget.className += " active";
   }
+
+  const exampleData = [
+    {
+      group: "A",
+      min: 10,
+      q1: 20,
+      median: 30,
+      q3: 40,
+      max: 50,
+    },
+    {
+      group: "B",
+      min: 5,
+      q1: 15,
+      median: 25,
+      q3: 35,
+      max: 45,
+    },
+    {
+      group: "C",
+      min: 12,
+      q1: 22,
+      median: 32,
+      q3: 42,
+      max: 52,
+    },
+  ];
 
   // const openTab = (tabName) => {
   //   setActiveTab(tabName);
@@ -93,7 +121,7 @@ const App = () => {
           <div className="data">
             <div className="tab">
               <button
-                className="tablinks"
+                className="tablinks active"
                 display="none"
                 onClick={(event) => openTab(event, "winners-tab")}
                 // className={`tablinks${
@@ -104,15 +132,15 @@ const App = () => {
                 Incumbents
               </button>
               <button
-                // id="dist-tab"
-                // className="tablinks"
-                // display="none"
-                // onClick={(event) => openTab(event, "district-tab")}
                 id="dist-tab"
-                className={`tablinks${
-                  activeTab === "district-tab" ? " active" : ""
-                }`}
-                onClick={() => openTab("district-tab")}
+                className="tablinks"
+                display="none"
+                onClick={(event) => openTab(event, "district-tab")}
+                // id="dist-tab"
+                // className={`tablinks${
+                //   activeTab === "district-tab" ? " active" : ""
+                // }`}
+                // onClick={() => openTab("district-tab")}
               >
                 District Details
               </button>
@@ -151,11 +179,7 @@ const App = () => {
                 <strong>Number of Incumbents: </strong> {count} <br />
                 <strong>Number of Incumbents Predicted to Win: </strong>{" "}
                 {count - 1} <br />
-                <img
-                  src={imag}
-                  alt="Ensemble Box and Whiskers"
-                  style={{ width: "600px" }}
-                />{" "}
+                <BoxAndWhiskersPlot data={exampleData} />
               </div>
             </div>
 

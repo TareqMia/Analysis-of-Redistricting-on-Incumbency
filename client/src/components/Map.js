@@ -40,6 +40,8 @@ const Map = ({ currentState, currentDistrict, showIncumbents }) => {
     console.log(result);
   };
 
+  const getStateOutlines = () => {};
+
   useEffect(() => {
     // getMessage();
 

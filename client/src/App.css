@@ -61,7 +61,7 @@
 .district {
   height: min-content;
   max-height: 50px;
-  width: 45vw;
+  width: 30vw;
   transform: scale(0.9);
   margin-bottom: 180px;
   transition: opacity 0.5s ease-in-out;
@@ -69,6 +69,12 @@
   animation-name: slide-down;
   animation-duration: 0.5s;
   animation-fill-mode: both;
+
+  /* text-align: center; */
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  transform: scale(0.9);
 }
 
 .district.show {

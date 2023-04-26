@@ -138,6 +138,18 @@ function GlobalStoreContextProvider(props) {
     asyncGetDistricts(state);
   };
 
+  store.getStateOutline = (state) => {
+    const asyncGetStateOutline = async (state) => {
+      try {
+        const response = api.getStateOutline(state);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    asyncGetStateOutlines(state);
+  };
+
   return (
     <GlobalStoreContext.Provider
       value={{
