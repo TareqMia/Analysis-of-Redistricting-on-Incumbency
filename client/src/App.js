@@ -86,8 +86,10 @@ const App = () => {
           setSelectedPlan={setSelectedPlan}
           districtPlans={districtPlans}
         />
-
-        <div style={{ height: "100vh", overflow: "auto" }}>
+        <div
+          className="data-container hide-scrollbar"
+          style={{ height: "100vh", overflow: "auto" }}
+        >
           <div className="data">
             <div className="tab">
               <button
@@ -99,7 +101,7 @@ const App = () => {
                 // }`}
                 // onClick={() => openTab("winners-tab")}
               >
-                District Winners
+                Incumbents
               </button>
               <button
                 // id="dist-tab"

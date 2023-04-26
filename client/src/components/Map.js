@@ -221,11 +221,6 @@ const Map = ({ currentState, currentDistrict, showIncumbents }) => {
     if (!state) {
       store.setState("");
     }
-    //   // setCurrentState("");
-    // } else {
-    //   store.setState(state);
-    //   // setCurrentState(state);
-    // }
 
     if (state === "FL") {
       store.setState("FL");

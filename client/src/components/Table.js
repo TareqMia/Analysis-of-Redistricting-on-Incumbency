@@ -16,17 +16,17 @@ const Table = ({ currentState }) => {
     });
   };
 
-  if (store.currentState != null) {
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (var i = 0; i < tablinks.length; i++) {
-      tablinks[i].style.display = "block";
-    }
-  } else {
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (var i = 0; i < tablinks.length; i++) {
-      tablinks[i].style.display = "none";
-    }
-  }
+  // if (store.currentState != null) {
+  //   let tablinks = document.getElementsByClassName("tablinks");
+  //   for (var i = 0; i < tablinks.length; i++) {
+  //     tablinks[i].style.display = "block";
+  //   }
+  // } else {
+  //   let tablinks = document.getElementsByClassName("tablinks");
+  //   for (var i = 0; i < tablinks.length; i++) {
+  //     tablinks[i].style.display = "none";
+  //   }
+  // }
 
   if (store) {
     if (store.currentDistrict) {
@@ -97,7 +97,6 @@ const Table = ({ currentState }) => {
               })}
             </tbody>
           </table>
-          <div>{store.geoJson ? `${store.geoJson}` : "TESTING"}</div>
         </div>
       )}
     </>
