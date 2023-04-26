@@ -78,7 +78,7 @@ function GlobalStoreContextProvider(props) {
   );
 
   store.setState = (state) => {
-    console.log(state);
+    // console.log(state);
     let districts = store.getDistricts(state);
 
     // let data = store.fetchGeojson(state).then((data) => {
@@ -138,16 +138,21 @@ function GlobalStoreContextProvider(props) {
     asyncGetDistricts(state);
   };
 
-  store.getStateOutline = (state) => {
+  store.getStateOutline = async (state) => {
     const asyncGetStateOutline = async (state) => {
       try {
-        const response = api.getStateOutline(state);
-        console.log(response.data);
+        const response = await api.getStateOutline(state);
+        return response;
       } catch (error) {
         console.log(error);
       }
     };
-    asyncGetStateOutlines(state);
+    try {
+      let data = await asyncGetStateOutline(state);
+      return data;
+    } catch (error) {
+      console.log("Error getting state outline:", error);
+    }
   };
 
   return (

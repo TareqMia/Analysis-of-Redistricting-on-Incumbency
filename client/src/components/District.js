@@ -21,9 +21,6 @@ const District = ({ currentState, currentDistrict }) => {
     { label: "Group C", value: 20 },
   ];
 
-  console.log("DISTRICT DATA");
-  console.log(data);
-
   useEffect(() => {
     if (store.currentState === "FL") {
       setData(flDemo);
