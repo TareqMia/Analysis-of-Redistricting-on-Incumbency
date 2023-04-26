@@ -16,10 +16,30 @@ const District = ({ currentState, currentDistrict }) => {
   const { store } = useContext(GlobalStoreContext);
 
   const pieData = [
-    { label: "Group A", value: 30 },
-    { label: "Group B", value: 50 },
-    { label: "Group C", value: 20 },
+    { label: "White", value: 50 },
+    { label: "Black or African American", value: 10 },
+    { label: "American Indian and Alaska Native", value: 10 },
+    { label: "Asian", value: 10 },
+    { label: "Native Hawaiian and Other Pacific Islander", value: 10 },
+    { label: "Other", value: 10 },
   ];
+
+    if (store && store.currentDistrict && store.currentState && data) {
+  
+    if (store.currentDistrict.properties.DISTRICT) {
+      // console.log(data[store.currentDistrict.properties.DISTRICT].White);
+      pieData = [
+        { label: "White", value: data[store.currentDistrict.properties.DISTRICT].White },
+        { label: "Black or African American", value: data[store.currentDistrict.properties.DISTRICT]["Black or African American"] },
+        { label: "American Indian and Alaska Native", value: data[store.currentDistrict.properties.DISTRICT]["American Indian and Alaska Native"] },
+        { label: "Asian", value: data[store.currentDistrict.properties.DISTRICT].Asian },
+        { label: "Native Hawaiian and Other Pacific Islander", value: data[store.currentDistrict.properties.DISTRICT]["Native Hawaiian and Other Pacific Islander"] },
+        { label: "Other", value: data[store.currentDistrict.properties.DISTRICT].Other },
+      ]
+    }
+    // console.log(data[store.currentDistrict.properties.DISTRICT].White);
+  }
+
 
   useEffect(() => {
     if (store.currentState === "FL") {
