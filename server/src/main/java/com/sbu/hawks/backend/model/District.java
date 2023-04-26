@@ -1,13 +1,10 @@
 package com.sbu.hawks.backend.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -18,31 +15,38 @@ public class District {
     private int districtNumber;
     private StateCode stateCode;
     private int populationTotal;
-    private float geographicTotal;
-    @DBRef
-    private Map<Demographic, Integer> demoGraphicSummary;
+    private double totalGeographicArea;
+    private Map<Demographic, Integer> demographicSummary;
     private double geographicVariation;
     private double populationVariation;
-    private String winner;
-    private Set<String> incumbents;
+    private String candidate;
     private PoliticalParty party;
-    @JsonIgnore
 
     public District() {
     }
 
-    public District(int districtNumber, StateCode stateCode, int populationTotal, float geographicTotal, double geographicVariation,
-                    double populationVariation, String winner, PoliticalParty party) {
+    public District(String id, int districtNumber, StateCode stateCode, int populationTotal,
+                    double totalGeographicArea, Map<Demographic, Integer> demographicSummary,
+                    double geographicVariation, double populationVariation, String candidate,
+                    PoliticalParty party) {
+        this.id = id;
         this.districtNumber = districtNumber;
         this.stateCode = stateCode;
+        this.populationTotal = populationTotal;
+        this.totalGeographicArea = totalGeographicArea;
+        this.demographicSummary = demographicSummary;
         this.geographicVariation = geographicVariation;
         this.populationVariation = populationVariation;
-        this.populationTotal = populationTotal;
-        this.geographicTotal = geographicTotal;
-        this.winner = winner;
-        this.incumbents = null;
+        this.candidate = candidate;
         this.party = party;
-        this.id = districtNumber + "-" + stateCode.getStateCode();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getDistrictNumber() {
@@ -56,17 +60,33 @@ public class District {
     public StateCode getStateCode() {
         return stateCode;
     }
-    
-    public int getPopulationTotal() {
-        return this.populationTotal;
-    }
-
-    public float getGeographicTotal() {
-        return this.geographicTotal;
-    }
 
     public void setStateCode(StateCode stateCode) {
         this.stateCode = stateCode;
+    }
+
+    public int getPopulationTotal() {
+        return populationTotal;
+    }
+
+    public void setPopulationTotal(int populationTotal) {
+        this.populationTotal = populationTotal;
+    }
+
+    public double getTotalGeographicArea() {
+        return totalGeographicArea;
+    }
+
+    public void setTotalGeographicArea(double totalGeographicArea) {
+        this.totalGeographicArea = totalGeographicArea;
+    }
+
+    public Map<Demographic, Integer> getDemographicSummary() {
+        return demographicSummary;
+    }
+
+    public void setDemographicSummary(Map<Demographic, Integer> demographicSummary) {
+        this.demographicSummary = demographicSummary;
     }
 
     public double getGeographicVariation() {
@@ -85,15 +105,19 @@ public class District {
         this.populationVariation = populationVariation;
     }
 
-    public String getWinner() {
-        return this.winner;
+    public String getCandidate() {
+        return candidate;
     }
 
-    public Set<String> getIncumbents() {
-        return this.incumbents;
+    public void setCandidate(String candidate) {
+        this.candidate = candidate;
     }
 
     public PoliticalParty getParty() {
-        return this.party;
+        return party;
+    }
+
+    public void setParty(PoliticalParty party) {
+        this.party = party;
     }
 }

@@ -2,23 +2,26 @@ package com.sbu.hawks.backend.model;
 
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.data.annotation.Id;
 
+@org.springframework.data.mongodb.core.mapping.Document(collection = "district-plan")
 public class DistrictPlan {
-    @Id
     private StateCode stateCode;
     private List<District> districts;
     private String planName;
     private PlanType planType;
     private PoliticalParty createdBy;
+    private Document geoJson;
 
     public DistrictPlan(StateCode stateCode, List<District> districts, String planName,
-                        PlanType planType, PoliticalParty createdBy) {
+                        PlanType planType, PoliticalParty createdBy, Document geoJson) {
         this.stateCode = stateCode;
         this.districts = districts;
         this.planName = planName;
         this.planType = planType;
         this.createdBy = createdBy;
+        this.geoJson = geoJson;
     }
 
     public StateCode getStateCode() {
@@ -59,5 +62,13 @@ public class DistrictPlan {
 
     public void setCreatedBy(PoliticalParty createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Document getGeoJson() {
+        return geoJson;
+    }
+
+    public void setGeoJson(Document geoJson) {
+        this.geoJson = geoJson;
     }
 }

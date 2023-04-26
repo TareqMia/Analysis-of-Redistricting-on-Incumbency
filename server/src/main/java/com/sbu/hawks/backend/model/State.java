@@ -8,27 +8,36 @@ import org.springframework.data.annotation.Id;
 public class State {
     @Id
     private StateCode stateCode;
-    private final JsonObject currentDistrictPlan;
-    private final Set<DistrictPlan> districtPlans;
-    private final Ensemble ensemble;
+    private DistrictPlan districtPlan;
+    private  Ensemble ensemble;
+
+    public State() { }
 
     public State(StateCode stateCode, JsonObject districtPlan) {
         this.stateCode = stateCode;
-        this.currentDistrictPlan = districtPlan;
-        this.districtPlans = null;
+        this.districtPlan = null;
         this.ensemble = null;
+    }
+
+    public void setStateCode(StateCode stateCode) {
+        this.stateCode = stateCode;
+    }
+
+
+    public void setDistrictPlan(DistrictPlan districtPlan) {
+        this.districtPlan = districtPlan;
+    }
+
+    public void setEnsemble(Ensemble ensemble) {
+        this.ensemble = ensemble;
     }
 
     public StateCode getStateCode() {
         return this.stateCode;
     }
 
-    public JsonObject getCurrentDistrictPLan() {
-        return this.currentDistrictPlan;
-    }
-
-    public Set<DistrictPlan> getDistrictPlans() {
-        return this.districtPlans;
+    public DistrictPlan getDistrictPlan() {
+        return this.districtPlan;
     }
 
     public Ensemble getEnsemble() {
