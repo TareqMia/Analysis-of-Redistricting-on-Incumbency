@@ -13,6 +13,10 @@ import FL_ensemble from "./json/FL_ensemble.json";
 import geoBox from "./json/FL_geo_box.json";
 import EnsembleInformation from "./components/EnsembleInformation";
 
+const flSafeSeat = [
+  {incumbent: "Incumbents", DEM: 6, REP: 16, demSafeSeats: 2, repSafeSeats: 4},
+  {incumbent: "Non-Incumbents", DEM: 2, REP: 4, demSafeSeats: 1, repSafeSeats: 0}
+]
 const App = () => {
   const { store } = useContext(GlobalStoreContext);
 
@@ -145,7 +149,26 @@ const App = () => {
 
             <div id="incumbent-tab" className="tabcontent">
               <div className="ensemble">
-                <img src={seats} alt="Open Seats" style={{ width: "500px" }} />{" "}
+              <table className="ui celled table">
+                <tr>
+                  <th>Seat Holders</th>
+                  <th>Democrat Winners</th>
+                  <th>Republican Winners</th>
+                  <th>Democrat Safe Seats</th>
+                  <th>Republican Safe Seats</th>
+                </tr>
+                {flSafeSeat.map((val, key) => {
+                  return (
+                    <tr key={key}>
+                      <td>{val.incumbent}</td>
+                      <td>{val.DEM}</td>
+                      <td>{val.REP}</td>
+                      <td>{val.demSafeSeats}</td>
+                      <td>{val.repSafeSeats}</td>
+                    </tr>
+                  )
+                })}
+              </table>
               </div>
             </div>
           </div>
