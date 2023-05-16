@@ -11,7 +11,7 @@
 }
 
 .map-container {
-  flex: 3;
+  flex: 2.4;
   height: calc(100vh - 5rem);
   border-radius: 0.5rem;
   overflow: hidden;
@@ -35,7 +35,6 @@
 .tab-container {
   width: 100%;
   position: relative;
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   overflow-x: hidden;
@@ -192,6 +191,9 @@
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
   border-top: none;
+}
+
+.legend-text {
+  font-size: 12px; /* Adjust the value as needed */
 }

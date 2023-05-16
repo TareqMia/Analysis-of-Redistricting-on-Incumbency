@@ -1,29 +1,4 @@
 import { createContext, useState, useReducer } from "react";
-import flDemo from "../json/demo-data/Florida-Demographic.json";
-import gaDemo from "../json/demo-data/Georgia-Demographic.json";
-import paDemo from "../json/demo-data/Pennslyvania-Demographic.json";
-import flWinners from "../json/districts-winners/Florida-District-Winners-2022.json";
-import gaWinners from "../json/districts-winners/Georgia-District-Winners-2022.json";
-import paWinners from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
-import floridaOutline from "../json/fl-state_outline.json";
-import georgiaOutline from "../json/ga-state_outline.json";
-import pennsylvaniaOutline from "../json/pa-state_outline.json";
-
-import florida_2022 from "../json/florida.json";
-import georgia_2022 from "../json/georgia.json";
-import pennsylvania_2022 from "../json/pennsylvania.json";
-
-import florida_2020 from "../json/2020-district_plans/florida-2020.json";
-import georgia_2020 from "../json/2020-district_plans/georgia-2020.json";
-import pennsylvania_2020 from "../json/2020-district_plans/pennslyvania-2020.json";
-
-import florida_districts from "../json/districts-winners/Florida-District-Winners-2022.json";
-import georgia_districts from "../json/districts-winners/Georgia-District-Winners-2022.json";
-import pennsylvania_districts from "../json/districts-winners/Pennslyvania-District-Winners-2022.json";
-
-import florida_incumbents from "../json/incumbent-2022/Florida-Incumbent-2022.json";
-import georgia_incumbents from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
-import pennsylvania_incumbents from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 import api from "./store-request-api";
 
 export const GlobalStoreContext = createContext({});
@@ -32,7 +7,12 @@ export const GlobalStoreActionType = {
   SET_STATE: "SET_STATE",
   SET_DISTRICT: "SET_DISTRICT",
   SHOW_INCUMBENTS: "SHOW_INCUMBENTS",
-  SET_GEOJSON: "SET_GEOJSON",
+  SET_DISTRICT_PLAN: "SET_DISTRICT_PLAN",
+  SET_ENSEMBLE: "SET_ENSEMBLE",
+  GET_STATES: "GET_STATES",
+  SET_DISTRICTS: "SET_DISTRICTS",
+  SET_PLAN_TYPE: "SET_PLAN_TYPE",
+  SET_PLAN_NAME: "SET_PLAN_NAME",
 };
 
 function GlobalStoreContextProvider(props) {
@@ -52,16 +32,47 @@ function GlobalStoreContextProvider(props) {
             currentDistrict: action.payload.district,
           };
         }
+        case GlobalStoreActionType.SET_DISTRICTS: {
+          return {
+            ...state,
+            districts: action.payload,
+          };
+        }
         case GlobalStoreActionType.SHOW_INCUMBENTS: {
           return {
             ...state,
             showIncumbents: action.payload.showIncumbents,
           };
         }
-        case GlobalStoreActionType.SET_GEOJSON: {
+        case GlobalStoreActionType.SET_DISTRICT_PLAN: {
           return {
             ...state,
-            geojson: action.payload.geojson,
+            currentDistrictPlan: action.payload.districtPlan,
+          };
+        }
+        case GlobalStoreActionType.SET_ENSEMBLE: {
+          return {
+            ...state,
+            ensemble: action.payload.ensemble,
+          };
+        }
+        case GlobalStoreActionType.GET_STATES: {
+          return {
+            ...state,
+            states: action.payload.states,
+          };
+        }
+        case GlobalStoreActionType.SET_PLAN_TYPE: {
+          return {
+            ...state,
+            planType: action.payload,
+          };
+        }
+
+        case GlobalStoreActionType.SET_PLAN_NAME: {
+          return {
+            ...state,
+            planName: action.payload,
           };
         }
         default:
@@ -74,21 +85,20 @@ function GlobalStoreContextProvider(props) {
       showIncumbents: false,
       districts: [],
       geoJson: null,
+      planType: "CURRENT",
+      currentDistrictPlan: null,
+      ensemble: null,
+      states: {},
+      planName: "",
     }
   );
 
   store.setState = (state) => {
-    // console.log(state);
-    let districts = store.getDistricts(state);
-
-    // let data = store.fetchGeojson(state).then((data) => {
-    //   return data;
-    // });
     dispatch({
       type: GlobalStoreActionType.SET_STATE,
       payload: {
         state: state,
-        districts: districts,
+        districts: null,
       },
     });
   };
@@ -102,9 +112,33 @@ function GlobalStoreContextProvider(props) {
     });
   };
 
-  store.setShowIncumbents = (value) => {
-    // fetch incumbents data
+  store.setDistricts = (districts) => {
+    console.log(districts);
+    dispatch({
+      type: GlobalStoreActionType.SET_DISTRICTS,
+      payload: districts,
+    });
+  };
 
+  store.setDistrictPlan = (districtPlan) => {
+    dispatch({
+      type: GlobalStoreActionType.SET_DISTRICT_PLAN,
+      payload: {
+        districtPlan: districtPlan,
+      },
+    });
+  };
+
+  store.setEnsemble = (ensemble) => {
+    dispatch({
+      type: GlobalStoreActionType.SET_ENSEMBLE,
+      payload: {
+        ensemble: ensemble,
+      },
+    });
+  };
+
+  store.setShowIncumbents = (value) => {
     dispatch({
       type: GlobalStoreActionType.SHOW_INCUMBENTS,
       payload: {
@@ -113,45 +147,73 @@ function GlobalStoreContextProvider(props) {
     });
   };
 
-  store.fetchGeojson = (state) => {
-    const asyncFetchGeojson = async (state) => {
-      try {
-        const response = await api.getMapGeoJson(state);
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    return asyncFetchGeojson(state);
+  store.setPlanType = (planType) => {
+    dispatch({
+      type: GlobalStoreActionType.SET_PLAN_TYPE,
+      payload: planType,
+    });
   };
 
-  store.getDistricts = (state) => {
-    const asyncGetDistricts = async (state) => {
-      try {
-        const response = await api.getDistricts(state);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    asyncGetDistricts(state);
+  store.setPlanName = (planName) => {
+    dispatch({
+      type: GlobalStoreActionType.SET_PLAN_NAME,
+      payload: planName,
+    });
+  };
+
+  store.getStates = async () => {
+    const stateAbbreviations = ["FL", "GA", "PA"];
+    const statePromises = stateAbbreviations.map((abbr) =>
+      store.getState(abbr)
+    );
+    const stateData = await Promise.all(statePromises);
+
+    const states = stateAbbreviations.reduce((acc, abbr, index) => {
+      acc[abbr] = stateData[index];
+      return acc;
+    }, {});
+
+    dispatch({
+      type: GlobalStoreActionType.GET_STATES,
+      payload: { states },
+    });
+  };
+
+  store.getState = async (state) => {
+    try {
+      const response = await api.getState("FL");
+      return response.data;
+    } catch (error) {
+      console.log("Error getting state: ", error);
+    }
   };
 
   store.getStateOutline = async (state) => {
-    const asyncGetStateOutline = async (state) => {
-      try {
-        const response = await api.getStateOutline(state);
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    };
     try {
-      let data = await asyncGetStateOutline(state);
-      return data;
+      const response = await api.getStateOutline(state);
+      return response;
     } catch (error) {
       console.log("Error getting state outline:", error);
+    }
+  };
+
+  store.getDistrictPlan = async (state, planType) => {
+    try {
+      const response = await api.getDistrictPlan(state, planType);
+      return response;
+    } catch (error) {
+      console.log("Error getting state outline:", error);
+    }
+  };
+
+  store.getEnsemble = async (state) => {
+    console.log(store.currentState);
+    try {
+      const response = await api.getEnsemble("FL");
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log("Error getting ensemble: ", error);
     }
   };
 

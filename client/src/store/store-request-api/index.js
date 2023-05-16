@@ -4,16 +4,18 @@ const api = axios.create({
   baseURL: "http://localhost:8080/api",
 });
 
-export const getStateOutline = (state) => api.get(`/map/${state}`);
+export const getState = (state) => api.get(`/map/${state}`);
 
-export const getMapGeoJson = (stateCode) => api.get(`/map/${stateCode}`);
-export const getDistricts = (stateCode) =>
-  api.get(`/districts/incumbents/${stateCode}`);
+export const getStateOutline = (state) => api.get(`/map/${state}`);
+export const getDistrictPlan = (state, planType) =>
+  api.get(`/map/${state}/${planType}`);
+export const getEnsemble = (state) => api.get(`/map/${state}/ensemble`);
 
 const apis = {
-  getMapGeoJson,
-  getDistricts,
+  getState,
   getStateOutline,
+  getDistrictPlan,
+  getEnsemble,
 };
 
 export default apis;

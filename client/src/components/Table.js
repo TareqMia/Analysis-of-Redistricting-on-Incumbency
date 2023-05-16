@@ -1,57 +1,29 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
-import flCandidates from "../json/incumbent-2022/Florida-Incumbent-2022.json";
-import gaCandidates from "../json/incumbent-2022/Georgia-Incumbent-2022.json";
-import paCandidates from "../json/incumbent-2022/Pennslyvania-Incumbent-2022.json";
 import GlobalStoreContext from "../store";
 
-const Table = ({ currentState }) => {
-  const [data, setData] = useState([]);
+const Table = () => {
   const { store } = useContext(GlobalStoreContext);
+  const [data, setData] = useState([]);
 
   const handleRowClicked = (districtNum) => {
-    store.setDistrict({
-      properties: {
-        DISTRICT: parseInt(districtNum),
-      },
-    });
+    store.setDistrict(parseInt(districtNum));
   };
 
-  // if (store.currentState != null) {
-  //   let tablinks = document.getElementsByClassName("tablinks");
-  //   for (var i = 0; i < tablinks.length; i++) {
-  //     tablinks[i].style.display = "block";
-  //   }
-  // } else {
-  //   let tablinks = document.getElementsByClassName("tablinks");
-  //   for (var i = 0; i < tablinks.length; i++) {
-  //     tablinks[i].style.display = "none";
-  //   }
-  // }
+  useEffect(() => {
+    if (store.districts && store.districts.length !== 0) {
+      setData(store.districts);
+    }
+  }, [store.districts]);
 
   if (store) {
     if (store.currentDistrict) {
-      if (store.currentDistrict.properties.DISTRICT) {
+      if (store.currentDistrict) {
         document.getElementById("dist-tab").style.display = "block";
       } else {
         document.getElementById("dist-tab").style.display = "none";
       }
     }
   }
-
-  useEffect(() => {
-    if (store.currentState === "FL") {
-      setData(flCandidates);
-    }
-    if (store.currentState === "GA") {
-      setData(gaCandidates);
-    }
-    if (store.currentState === "PA") {
-      setData(paCandidates);
-    }
-    if (currentState === null) {
-      setData([]);
-    }
-  }, [store.currentState]);
 
   return (
     <>
@@ -64,36 +36,34 @@ const Table = ({ currentState }) => {
                 <th>Party</th>
                 <th>Election Result</th>
                 <th>District</th>
-                <th>Political Affiliation</th>
                 <th>Geographic Variation</th>
                 <th>Population Variation</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((val, key) => {
-                let color = val.Party === "DEM" ? "blue" : "red";
+              {data.map((district, key) => {
+                let color = district.party === "DEM" ? "blue" : "red";
 
                 let isHighlighted =
-                  store.currentDistrict &&
-                  store.currentDistrict.properties.DISTRICT ===
-                    parseInt(val.District);
-                return (
+                  store.currentDistrict === parseInt(district.districtNumber);
+                return district.incumbent ? (
                   <tr
                     key={key}
-                    onClick={() => handleRowClicked(val.District)}
+                    onClick={() => handleRowClicked(district.districtNumber)}
                     style={{
                       background: isHighlighted ? "#FFFF8A" : "transparent",
                     }}
                   >
-                    <td>{val.Candidate}</td>
-                    <td style={{ color: color }}>{val.Party}</td>
-                    <td>{val["Primary Outcome"]}</td>
-                    <td>{val.District}</td>
-                    <td>{val.State}</td>
-                    <td>{(Math.random() + 0.3).toFixed(1)}</td>
-                    <td>{(Math.random() * 500 - 100).toFixed(1)}</td>
+                    <td>{district.incumbent}</td>
+                    <td style={{ color: color }}>{district.party}</td>
+                    <td>
+                      {district.incumbent === district.winner ? "Won" : "Lost"}
+                    </td>
+                    <td>{district.districtNumber}</td>
+                    <td>{district.geographicVariation}</td>
+                    <td>{district.populationVariation}</td>
                   </tr>
-                );
+                ) : null;
               })}
             </tbody>
           </table>

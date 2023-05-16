@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
@@ -13,9 +13,9 @@ const App = () => {
   const { store } = useContext(GlobalStoreContext);
 
   const districtPlans = {
-    2022: "2022",
-    2020: "2020",
-    random: "random",
+    2022: "CURRENT",
+    2020: "PREVIOUS",
+    SEAWULF: "SEAWULF",
   };
 
   const [selectedPlan, setSelectedPlan] = useState(districtPlans[2022]);
@@ -25,8 +25,12 @@ const App = () => {
   const [count, setCount] = useState(0);
   const [activeTab, setActiveTab] = useState("winners-tab");
 
-  function openTab(event, tabName) {
-    var i, tabcontent, tablinks;
+  const openTab = (event, tabName) => {
+    let i, tabcontent, tablinks;
+
+    if (tabName === "ensemble-tab") {
+      setActiveTab(tabName);
+    }
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
@@ -37,78 +41,28 @@ const App = () => {
     }
     document.getElementById(tabName).style.display = "block";
     event.currentTarget.className += " active";
+  };
+
+  function transformObject(input) {
+    return {
+      group: input.category,
+      min: input.min,
+      q1: input.lowerQuartile,
+      median: input.median,
+      q3: input.upperQuartile,
+      max: input.max,
+    };
   }
 
-  const exampleData = [
-    {
-      group: "A",
-      min: 10,
-      q1: 20,
-      median: 30,
-      q3: 40,
-      max: 50,
-    },
-    {
-      group: "B",
-      min: 5,
-      q1: 15,
-      median: 25,
-      q3: 35,
-      max: 45,
-    },
-    {
-      group: "C",
-      min: 12,
-      q1: 22,
-      median: 32,
-      q3: 42,
-      max: 52,
-    },
-  ];
-
-  // const openTab = (tabName) => {
-  //   setActiveTab(tabName);
-  // };
-
-  // useEffect(() => {
-  //   if (store && store.currentState === "FL") {
-  //     setImag(
-  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222857031751/florida.png"
-  //     );
-  //     setSeats(
-  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080772506782269552/image.png"
-  //     );
-  //     setCount(23);
-  //   }
-  //   if (store && store.currentState === "GA") {
-  //     setImag(
-  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222617948160/georgia.png"
-  //     );
-  //     setSeats(
-  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080774201578885200/image.png"
-  //     );
-  //     setCount(13);
-  //   }
-  //   if (store && store.currentState === "PA") {
-  //     setImag(
-  //       "https://media.discordapp.net/attachments/1080353490171346954/1080779222425018409/pennsylvania.png"
-  //     );
-  //     setSeats(
-  //       "https://cdn.discordapp.com/attachments/1080353490171346954/1080773577260937266/image.png"
-  //     );
-  //     setCount(16);
-  //   }
-  // }, []);
+  const boxAndWhiskerData =
+    store && store.ensemble
+      ? store.ensemble.boxAndWhiskerData.map(transformObject)
+      : [];
 
   return (
     <GlobalStoreContextProvider value={{ store }}>
       <div className="App">
-        <Map
-          currentState={store ? store.currentState : null}
-          setCurrentState={store ? store.setCurrentState : ""}
-          currentDistrict={store ? store.currentDistrict : ""}
-          showIncumbents={store ? store.showIncumbents : false}
-        />
+        <Map store={store} />
         <DistrictPlanSelector
           selectedPlan={selectedPlan}
           setSelectedPlan={setSelectedPlan}
@@ -124,10 +78,6 @@ const App = () => {
                 className="tablinks active"
                 display="none"
                 onClick={(event) => openTab(event, "winners-tab")}
-                // className={`tablinks${
-                //   activeTab === "winners-tab" ? " active" : ""
-                // }`}
-                // onClick={() => openTab("winners-tab")}
               >
                 Incumbents
               </button>
@@ -136,11 +86,6 @@ const App = () => {
                 className="tablinks"
                 display="none"
                 onClick={(event) => openTab(event, "district-tab")}
-                // id="dist-tab"
-                // className={`tablinks${
-                //   activeTab === "district-tab" ? " active" : ""
-                // }`}
-                // onClick={() => openTab("district-tab")}
               >
                 District Details
               </button>
@@ -166,20 +111,43 @@ const App = () => {
             </div>
 
             <div id="district-tab" className="tabcontent">
-              <District
-                currentState={store ? store.currentState : ""}
-                currentDistrict={store ? store.currentDistrict : ""}
-              />
+              <District />
             </div>
 
             <div id="ensemble-tab" className="tabcontent">
               <div className="ensemble">
                 <h3>Ensemble Information & Prediction</h3>
-                <strong>Number of District Plans: </strong> 10000 <br />
-                <strong>Number of Incumbents: </strong> {count} <br />
-                <strong>Number of Incumbents Predicted to Win: </strong>{" "}
-                {count - 1} <br />
-                <BoxAndWhiskersPlot data={exampleData} />
+                <strong>Number of District Plans: </strong>{" "}
+                {store && store.ensemble ? store.ensemble.numDistrictPlans : ""}{" "}
+                <br />
+                <strong>Number of Incumbents: </strong>{" "}
+                {store && store.ensemble ? store.ensemble.numIncumbents : ""}{" "}
+                <br />
+                <strong>Number of Incumbents Predicted to Win: </strong>
+                {store && store.ensemble
+                  ? store.ensemble.numPredictedWinners
+                  : ""}{" "}
+                <br />
+                <strong>
+                  Average Population Variation:{" "}
+                  {store && store.ensemble
+                    ? store.ensemble.avgPopulationVariation
+                    : ""}{" "}
+                </strong>
+                <br />
+                <strong>
+                  Average Geographic Variation:{" "}
+                  {store && store.ensemble
+                    ? store.ensemble.avgGeographicVariation
+                    : ""}{" "}
+                </strong>
+                <BoxAndWhiskersPlot
+                  data={
+                    store && store.ensemble
+                      ? store.ensemble.boxAndWhiskerData
+                      : []
+                  }
+                />
               </div>
             </div>
 

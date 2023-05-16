@@ -3,8 +3,8 @@ import * as d3 from "d3";
 
 const BoxAndWhiskersPlot = ({ data }) => {
   const svgRef = React.useRef();
-
   useEffect(() => {
+    d3.select(svgRef.current).selectAll("*").remove();
     if (data) {
       renderPlot();
     }
@@ -15,8 +15,8 @@ const BoxAndWhiskersPlot = ({ data }) => {
 
     // Set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 30, left: 40 };
-    const width = 400 - margin.left - margin.right;
-    const height = 200 - margin.top - margin.bottom;
+    const width = 600 - margin.left - margin.right;
+    const height = 300 - margin.top - margin.bottom;
 
     // Create the scale functions for x and y axes
     const x = d3
@@ -27,7 +27,7 @@ const BoxAndWhiskersPlot = ({ data }) => {
     const y = d3.scaleLinear().range([height, 0]);
 
     // Set the domains for the scales
-    x.domain(data.map((d) => d.group));
+    x.domain(data.map((d) => d.category));
     y.domain([0, d3.max(data, (d) => d.max)]);
 
     // Create the x-axis
@@ -50,7 +50,7 @@ const BoxAndWhiskersPlot = ({ data }) => {
       .append("g")
       .attr(
         "transform",
-        (d) => `translate(${x(d.group) + margin.left},${margin.top})`
+        (d) => `translate(${x(d.category) + margin.left},${margin.top})`
       );
 
     // Draw the min-max line (whiskers)
@@ -67,8 +67,8 @@ const BoxAndWhiskersPlot = ({ data }) => {
       .append("rect")
       .attr("x", 0)
       .attr("width", x.bandwidth())
-      .attr("y", (d) => y(d.q3))
-      .attr("height", (d) => y(d.q1) - y(d.q3))
+      .attr("y", (d) => y(d.upperQuartile))
+      .attr("height", (d) => y(d.lowerQuartile) - y(d.upperQuartile))
       .attr("stroke", "black")
       .attr("fill", "#69b3a2");
 
@@ -85,8 +85,8 @@ const BoxAndWhiskersPlot = ({ data }) => {
   return (
     <svg
       ref={svgRef}
-      width={400}
-      height={200}
+      width={530}
+      height={300}
       style={{ border: "1px solid lightgray", marginBottom: "1rem" }}
     ></svg>
   );
