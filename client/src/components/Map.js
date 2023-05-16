@@ -127,6 +127,9 @@ const Map = () => {
         if (!floridaRef.current) return;
 
         if (feature.geometry.type === "Polygon") {
+          if (store.planType === "PREVIOUS") {
+            store.setDistrict(feature.properties.District);
+          }
           console.log(feature.properties.DISTRICT);
           store.setDistrict(feature.properties.DISTRICT);
         } else {
@@ -297,7 +300,8 @@ const Map = () => {
     }
     if (
       store.showIncumbents &&
-      floridaIncumbents.includes(feature.properties.DISTRICT)
+      store.districts[feature.properties.DISTRICT - 1].incumbent
+      // floridaIncumbents.includes(feature.properties.DISTRICT)
     ) {
       return {
         fillColor: "purple",

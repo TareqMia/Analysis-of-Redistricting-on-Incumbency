@@ -125,7 +125,7 @@
 .ui.celled.table {
   font-size: 12px;
   padding: 5px;
-  margin: 5px;
+  margin: 0px;
 }
 
 .ui.celled.table th {
