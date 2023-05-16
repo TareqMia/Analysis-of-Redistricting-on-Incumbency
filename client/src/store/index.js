@@ -130,6 +130,8 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.setEnsemble = (ensemble) => {
+    console.log("setting ensemble");
+    console.log(ensemble);
     dispatch({
       type: GlobalStoreActionType.SET_ENSEMBLE,
       payload: {
@@ -181,7 +183,7 @@ function GlobalStoreContextProvider(props) {
 
   store.getState = async (state) => {
     try {
-      const response = await api.getState("FL");
+      const response = await api.getState(state);
       return response.data;
     } catch (error) {
       console.log("Error getting state: ", error);

@@ -31,21 +31,37 @@ const Map = () => {
   const [georgiaOutline, setGeorgiaOutline] = useState(null);
   const [pennsylvaniaOutline, setPennsylvaniaOutline] = useState(null);
 
+  const legendData = {
+    new_district: 1,
+    ALAND20: 9024137870,
+    AWATER20: 3576602706,
+    TOTAL: 798089,
+    HTOT: 61585,
+    WTOT: 556499,
+    BAATOT: 100956,
+    AIANTOT: 4292,
+    ATOT: 21179,
+    NHPITOT: 1260,
+    OTHERTOT: 4144,
+    TWOTOT: 48174,
+    DEM: 143558,
+    REP: 287514,
+  };
+
   useEffect(() => {
     store.getStates();
   }, []);
 
+  console.log(store);
+
   useEffect(() => {
     const updateLayer = (layerRef, data) => {
-      console.log(data);
       if (layerRef.current && data) {
         layerRef.current.clearLayers().addData(data);
       }
     };
 
-    console.log(store);
-
-    const states = ["FL"];
+    const states = ["FL", "GA", "PA"];
     const refs = { FL: floridaRef, GA: georgiaRef, PA: pennsylvaniaRef };
 
     if (!store.currentState) {
@@ -59,12 +75,14 @@ const Map = () => {
 
     if (store.currentState === "FL") {
       let plan = null;
+      if (store.ensemble === null) {
+        store.setEnsemble(store.states.FL.ensemble);
+      }
 
       if (store.planType === "PREVIOUS") {
         plan = store.states.FL.districtPlans.find(
           (p) => p.planType === "PREVIOUS"
         );
-        console.log(plan);
 
         updateLayer(floridaRef, plan.geoJson);
       }
@@ -73,7 +91,6 @@ const Map = () => {
         plan = store.states.FL.districtPlans.find(
           (p) => p.planType === "SEAWULF" && p.planName === store.planName
         );
-        console.log(plan.geoJson);
 
         // Now `geojson` is ready to be used in your map
         updateLayer(floridaRef, randomPlan);
@@ -83,11 +100,95 @@ const Map = () => {
         plan = store.states.FL.districtPlans.find(
           (p) => p.planType === "CURRENT"
         );
-        if (!store.districts || store.districts.length === 0) {
+        if (
+          !store.districts ||
+          store.districts.length === 0 ||
+          store.currentState === "FL"
+        ) {
           store.setDistricts(plan.districts);
         }
 
         updateLayer(floridaRef, plan.geoJson);
+      }
+    }
+
+    if (store.currentState === "GA") {
+      let plan = null;
+      if (store.ensemble === null) {
+        store.setEnsemble(store.states.GA.ensemble);
+      }
+
+      if (store.planType === "PREVIOUS") {
+        plan = store.states.GA.districtPlans.find(
+          (p) => p.planType === "PREVIOUS"
+        );
+
+        updateLayer(georgiaRef, plan.geoJson);
+        updateLayer(floridaRef, store.states.FL.districtPlans[0].geoJson);
+      }
+
+      // if (store.planType === "SEAWULF" && store.planName !== "") {
+      //   plan = store.states.GA.districtPlans.find(
+      //     (p) => p.planType === "SEAWULF" && p.planName === store.planName
+      //   );
+
+      //   // Now `geojson` is ready to be used in your map
+      //   updateLayer(georgiaRef, randomPlan);
+      // }
+
+      if (store.planType === "CURRENT") {
+        plan = store.states.GA.districtPlans.find(
+          (p) => p.planType === "CURRENT"
+        );
+        console.log(plan);
+        if (
+          !store.districts ||
+          store.districts.length === 0 ||
+          store.currentState === "GA"
+        ) {
+          store.setDistricts(plan.districts);
+        }
+
+        updateLayer(georgiaRef, plan.geoJson);
+      }
+    }
+
+    if (store.currentState === "PA") {
+      let plan = null;
+      if (store.ensemble === null) {
+        store.setEnsemble(store.states.PA.ensemble);
+      }
+
+      if (store.planType === "PREVIOUS") {
+        plan = store.states.PA.districtPlans.find(
+          (p) => p.planType === "PREVIOUS"
+        );
+
+        updateLayer(pennsylvaniaRef, plan.geoJson);
+      }
+
+      // if (store.planType === "SEAWULF" && store.planName !== "") {
+      //   plan = store.states.PA.districtPlans.find(
+      //     (p) => p.planType === "SEAWULF" && p.planName === store.planName
+      //   );
+
+      //   // Now `geojson` is ready to be used in your map
+      //   updateLayer(pennsylvaniaRef, randomPlan);
+      // }
+
+      if (store.planType === "CURRENT") {
+        plan = store.states.PA.districtPlans.find(
+          (p) => p.planType === "CURRENT"
+        );
+        if (
+          !store.districts ||
+          store.districts.length === 0 ||
+          store.currentState === "PA"
+        ) {
+          store.setDistricts(plan.districts);
+        }
+
+        updateLayer(pennsylvaniaRef, plan.geoJson);
       }
     }
   }, [
@@ -100,6 +201,7 @@ const Map = () => {
     store.districts,
     store.planType,
     store.planName,
+    store.ensemble,
   ]);
 
   const tileLayerOptions = {
@@ -130,7 +232,6 @@ const Map = () => {
           if (store.planType === "PREVIOUS") {
             store.setDistrict(feature.properties.District);
           }
-          console.log(feature.properties.DISTRICT);
           store.setDistrict(feature.properties.DISTRICT);
         } else {
           store.setState("FL");
@@ -158,12 +259,11 @@ const Map = () => {
       click: (event) => {
         if (!georgiaRef.current) return;
 
-        // setCurrentState("georgia");
         store.setState("GA");
         store.setDistrict(null);
 
         if (feature.geometry.type === "Polygon") {
-          store.setDistrict(feature);
+          store.setDistrict(parseInt(feature.properties.DISTRICT));
         }
 
         const map = event.target._map;
@@ -171,8 +271,6 @@ const Map = () => {
           duration: 1.5,
           easeLinearity: 0.2,
         });
-
-        georgiaRef.current.clearLayers().addData(georgia);
       },
     });
   };
@@ -195,7 +293,7 @@ const Map = () => {
           duration: 1.5,
           easeLinearity: 0.2,
         });
-        pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
+        // pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
       },
     });
   };
@@ -203,12 +301,10 @@ const Map = () => {
   const handleStateChange = (event) => {
     const state = event.target.value;
 
-    console.log(state);
-
     if (!state) {
       store.setState("");
 
-      const map = floridaRef.current.getLayers()[0]._map;
+      const map = georgiaRef.current.getLayers()[0]._map;
       map.flyTo([35, -81], 5, {
         duration: 1.5,
         easeLinearity: 0.2,
@@ -244,7 +340,7 @@ const Map = () => {
         duration: 1.5,
         easeLinearity: 0.2,
       });
-      // setCurrentState("pennsylvania");
+
       pennsylvaniaRef.current.clearLayers().addData(pennsylvania);
     }
   };
@@ -301,7 +397,6 @@ const Map = () => {
     if (
       store.showIncumbents &&
       store.districts[feature.properties.DISTRICT - 1].incumbent
-      // floridaIncumbents.includes(feature.properties.DISTRICT)
     ) {
       return {
         fillColor: "purple",
@@ -337,6 +432,116 @@ const Map = () => {
     };
   };
 
+  const getGeorgiaStyle = (feature) => {
+    if (store.currentDistrict === parseInt(feature.properties.DISTRICT)) {
+      return {
+        fillColor: "green",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 2,
+      };
+    }
+    if (store.currentState !== "GA") {
+      return {
+        fillColor: "grey",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (
+      store.showIncumbents &&
+      store.districts[feature.properties.DISTRICT - 1].incumbent
+    ) {
+      return {
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (
+      store.showIncumbents &&
+      !georgiaIncumbents.includes(feature.properties.DISTRICT)
+    ) {
+      return {
+        fillColor: "grey",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (georgiaParties[feature.properties.DISTRICT - 1] === "REP") {
+      return {
+        fillColor: "red",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    return {
+      fillColor: "blue",
+      fillOpacity: 0.5,
+      color: "black",
+      weight: 1,
+    };
+  };
+
+  const getPennsylvaniaStyle = (feature) => {
+    if (store.currentDistrict === parseInt(feature.properties.DISTRICT)) {
+      return {
+        fillColor: "green",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 2,
+      };
+    }
+    if (store.currentState !== "PA") {
+      return {
+        fillColor: "grey",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (
+      store.showIncumbents &&
+      store.districts[feature.properties.DISTRICT - 1].incumbent
+    ) {
+      return {
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (
+      store.showIncumbents &&
+      !pennsylvaniaIncumbents.includes(feature.properties.DISTRICT)
+    ) {
+      return {
+        fillColor: "grey",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    if (pennsylvaniaParties[feature.properties.DISTRICT - 1] === "REP") {
+      return {
+        fillColor: "red",
+        fillOpacity: 0.5,
+        color: "black",
+        weight: 1,
+      };
+    }
+    return {
+      fillColor: "blue",
+      fillOpacity: 0.5,
+      color: "black",
+      weight: 1,
+    };
+  };
+
   return (
     <MapContainer
       className="map-container"
@@ -356,80 +561,25 @@ const Map = () => {
         style={getFloridaStyle}
         onEachFeature={handleFloridaClicked}
       />
+      {/* <div className="legend">
+        <ul>
+          {Object.entries(legendData).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}</strong>: {value}
+            </li>
+          ))}
+        </ul>
+      </div> */}
       <GeoJSON
         ref={georgiaRef}
         data={georgiaOutline}
-        style={
-          (stateOptions.style,
-          (feature) =>
-            store.currentDistrict && store.currentDistrict === feature
-              ? {
-                  fillColor: "green",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 2,
-                }
-              : {
-                  fillColor:
-                    store.currentState !== "GA"
-                      ? "grey"
-                      : store.showIncumbents &&
-                        georgiaIncumbents.includes(
-                          parseInt(feature.properties.DISTRICT)
-                        )
-                      ? "purple"
-                      : store.showIncumbents &&
-                        !georgiaIncumbents.includes(feature.properties.DISTRICT)
-                      ? "grey"
-                      : georgiaParties[feature.properties.DISTRICT - 1] ===
-                        "REP"
-                      ? "red"
-                      : "blue",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 1,
-                })
-        }
+        style={getGeorgiaStyle}
         onEachFeature={handleGeorgiaClicked}
       />
       <GeoJSON
         ref={pennsylvaniaRef}
         data={pennsylvaniaOutline}
-        style={
-          (stateOptions.style,
-          (feature) =>
-            store.currentDistrict &&
-            store.currentDistrict.properties.DISTRICT ===
-              feature.properties.DISTRICT
-              ? {
-                  fillColor: "green",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 2,
-                }
-              : {
-                  fillColor:
-                    store.currentState !== "PA"
-                      ? "grey"
-                      : store.showIncumbents &&
-                        georgiaIncumbents.includes(
-                          parseInt(feature.properties.DISTRICT)
-                        )
-                      ? "purple"
-                      : store.showIncumbents &&
-                        !pennsylvaniaIncumbents.includes(
-                          feature.properties.DISTRICT
-                        )
-                      ? "grey"
-                      : pennsylvaniaParties[feature.properties.DISTRICT - 1] ===
-                        "REP"
-                      ? "red"
-                      : "blue",
-                  fillOpacity: 0.5,
-                  color: "black",
-                  weight: 1,
-                })
-        }
+        style={getPennsylvaniaStyle}
         onEachFeature={handlePennsylvaniaClicked}
       />
 
@@ -462,6 +612,7 @@ const Map = () => {
         className="ui checkbox"
       >
         <input
+          disabled={store.planType !== "CURRENT"}
           type="checkbox"
           name="public"
           checked={store.showIncumbents}

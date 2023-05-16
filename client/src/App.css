@@ -123,17 +123,17 @@
 }
 
 .ui.celled.table {
-  font-size: 12px;
-  padding: 5px;
+  font-size: 13px;
+  padding: 0px;
   margin: 0px;
 }
 
 .ui.celled.table th {
-  padding: 5px;
+  padding: 3px;
 }
 
 .ui.celled.table td {
-  padding: 4px;
+  padding: 3px;
 }
 
 .button-group {
@@ -196,4 +196,27 @@
 
 .legend-text {
   font-size: 12px; /* Adjust the value as needed */
+}
+
+.legend {
+  position: absolute;
+  top: 35vh; /* Adjust the value to move the legend down */
+
+  background-color: rgba(255, 255, 255, 0.4);
+  left: 10px;
+
+  z-index: 1000;
+  width: 180px;
+  padding-left: 5px;
+}
+
+.legend ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.legend li {
+  margin-bottom: 5px; /* Add some space between the legend items */
+  text-align: left;
 }

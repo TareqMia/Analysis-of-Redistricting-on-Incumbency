@@ -11,14 +11,9 @@ const DistrictPlanSelector = ({
   const [randomPlanNames, setRandomPlanNames] = useState([]);
 
   const handlePlanSelection = (plan) => {
-    console.log(plan);
     store.setPlanType(districtPlans[plan]);
     setSelectedPlan(districtPlans[plan]);
   };
-
-  console.log(store.planName);
-  console.log(store.planType);
-
   useEffect(() => {
     if (store.states && store.states.FL && store.states.FL.districtPlans) {
       let seawulfPlans = store.states.FL.districtPlans

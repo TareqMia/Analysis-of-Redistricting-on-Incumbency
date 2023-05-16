@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import Map from "./components/Map";
@@ -7,7 +7,11 @@ import DistrictPlanSelector from "./components/DistrictPlanSelector";
 import District from "./components/District";
 import { GlobalStoreContextProvider } from "./store";
 import GlobalStoreContext from "./store";
-import BoxAndWhiskersPlot from "./components/BoxAndWhiskersPlot";
+import BoxPlot from "./components/BoxPlot";
+import FL_ensemble from "./json/FL_ensemble.json";
+
+import geoBox from "./json/FL_geo_box.json";
+import EnsembleInformation from "./components/EnsembleInformation";
 
 const App = () => {
   const { store } = useContext(GlobalStoreContext);
@@ -18,12 +22,18 @@ const App = () => {
     SEAWULF: "SEAWULF",
   };
 
+  console.log(FL_ensemble);
+
   const [selectedPlan, setSelectedPlan] = useState(districtPlans[2022]);
 
   const [imag, setImag] = useState("");
   const [seats, setSeats] = useState("");
   const [count, setCount] = useState(0);
   const [activeTab, setActiveTab] = useState("winners-tab");
+
+  useEffect(() => {
+    console.log(store);
+  }, [store.ensemble]);
 
   const openTab = (event, tabName) => {
     let i, tabcontent, tablinks;
@@ -115,40 +125,22 @@ const App = () => {
             </div>
 
             <div id="ensemble-tab" className="tabcontent">
-              <div className="ensemble">
+              {/* <div className="ensemble">
                 <h3>Ensemble Information & Prediction</h3>
                 <strong>Number of District Plans: </strong>{" "}
-                {store && store.ensemble ? store.ensemble.numDistrictPlans : ""}{" "}
-                <br />
+                {FL_ensemble[0].ensemble.numDistrictPlans} <br />
                 <strong>Number of Incumbents: </strong>{" "}
-                {store && store.ensemble ? store.ensemble.numIncumbents : ""}{" "}
-                <br />
+                {FL_ensemble[0].ensemble.numIncumbents} <br />
                 <strong>Number of Incumbents Predicted to Win: </strong>
-                {store && store.ensemble
-                  ? store.ensemble.numPredictedWinners
-                  : ""}{" "}
+                {FL_ensemble[0].ensemble.numPredictedWinners} <br />
+                <strong>Average Population Variation: </strong>
+                {FL_ensemble[0].ensemble.avgPopulationVariation.toFixed(4)}{" "}
                 <br />
-                <strong>
-                  Average Population Variation:{" "}
-                  {store && store.ensemble
-                    ? store.ensemble.avgPopulationVariation
-                    : ""}{" "}
-                </strong>
-                <br />
-                <strong>
-                  Average Geographic Variation:{" "}
-                  {store && store.ensemble
-                    ? store.ensemble.avgGeographicVariation
-                    : ""}{" "}
-                </strong>
-                <BoxAndWhiskersPlot
-                  data={
-                    store && store.ensemble
-                      ? store.ensemble.boxAndWhiskerData
-                      : []
-                  }
-                />
-              </div>
+                <strong>Average Geographic Variation: </strong>
+                {FL_ensemble[0].ensemble.avgGeographicVariation.toFixed(4)}{" "}
+                <BoxPlot data={geoBox} />
+              </div> */}
+              <EnsembleInformation ensemble={FL_ensemble[0].ensemble} />
             </div>
 
             <div id="incumbent-tab" className="tabcontent">

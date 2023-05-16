@@ -6,8 +6,6 @@ const District = () => {
 
   const { store } = useContext(GlobalStoreContext);
 
-  console.log(data);
-
   useEffect(() => {
     if (store.districts && store.districts.length !== 0) {
       setData(store.districts[store.currentDistrict - 1]);
@@ -50,10 +48,12 @@ const District = () => {
       },
     ];
 
+  console.log(store.currentDistrict);
+
   return (
-    <>
+    <div>
       {store.currentState && store.currentDistrict && (
-        <div className="district">
+        <div>
           <h3>
             <strong>District Details</strong>
           </h3>
@@ -85,7 +85,7 @@ const District = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

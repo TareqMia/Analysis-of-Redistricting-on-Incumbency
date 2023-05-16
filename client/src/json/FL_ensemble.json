@@ -1,0 +1,156 @@
+[{
+  "ensemble": {
+    "stateCode": "FL",
+    "numDistrictPlans": 233,
+    "numIncumbents": 23,
+    "numPredictedWinners": 20,
+    "avgPopulationVariation": 1.1860882629108003,
+    "avgGeographicVariation": 0.40359924882629067,
+    "boxAndWhiskerData": [
+      {
+        "category": "District 1",
+        "min": 0.3774855979253583,
+        "lowerQuartile": 0.39176162322171,
+        "median": 0.39360124397153,
+        "upperQuartile": 0.39799820583041,
+        "max": 0.4002622253006446
+      },
+      {
+        "category": "District 2",
+        "min": 0.3952262829568311,
+        "lowerQuartile": 0.39873511194702,
+        "median": 0.39873511194702,
+        "upperQuartile": 0.40866811157214,
+        "max": 0.40976828330683185
+      },
+      {
+        "category": "District 3",
+        "min": 0.4157604221682337,
+        "lowerQuartile": 0.42135568577955,
+        "median": 0.42135568577955,
+        "upperQuartile": 0.4278566930752,
+        "max": 0.427856693075198
+      },
+      {
+        "category": "District 4",
+        "min": 0.43845789169859267,
+        "lowerQuartile": 0.43845789169859,
+        "median": 0.43845789169859,
+        "upperQuartile": 0.4389675857126,
+        "max": 0.44373040174943384
+      },
+      {
+        "category": "District 5",
+        "min": 0.44373040174943384,
+        "lowerQuartile": 0.44859507442065,
+        "median": 0.44859507442065,
+        "upperQuartile": 0.44909292685282,
+        "max": 0.45058648414935404
+      },
+      {
+        "category": "District 6",
+        "min": 0.44859507442064817,
+        "lowerQuartile": 0.45058648414935,
+        "median": 0.4579817145404,
+        "upperQuartile": 0.46816447251656,
+        "max": 0.46858702590620205
+      },
+      {
+        "category": "District 7",
+        "min": 0.45562985141089074,
+        "lowerQuartile": 0.4592300432418,
+        "median": 0.4685870259062,
+        "upperQuartile": 0.47588190187637,
+        "max": 0.47700059476834217
+      },
+      {
+        "category": "District 8",
+        "min": 0.4592300432417972,
+        "lowerQuartile": 0.47256939937908,
+        "median": 0.47640042072203,
+        "upperQuartile": 0.48161981240211,
+        "max": 0.5066779069376686
+      },
+      {
+        "category": "District 9",
+        "min": 0.4749233455536996,
+        "lowerQuartile": 0.4749233455537,
+        "median": 0.48266274723461,
+        "upperQuartile": 0.51621057349601,
+        "max": 0.5298692465647664
+      },
+      {
+        "category": "District 10",
+        "min": 0.48161981240211277,
+        "lowerQuartile": 0.50480300191058,
+        "median": 0.5179080066337,
+        "upperQuartile": 0.52986924656477,
+        "max": 0.5315513788572598
+      },
+      {
+        "category": "District 11",
+        "min": 0.505002022794258,
+        "lowerQuartile": 0.51700203969132,
+        "median": 0.53155137885726,
+        "upperQuartile": 0.53832155185471,
+        "max": 0.5383215518547126
+      },
+      {
+        "category": "District 12",
+        "min": 0.5120524365064261,
+        "lowerQuartile": 0.53832155185471,
+        "median": 0.53832155185471,
+        "upperQuartile": 0.54201939522347,
+        "max": 0.55782028395085
+      },
+      {
+        "category": "District 13",
+        "min": 0.5170020396913225,
+        "lowerQuartile": 0.54229882989511,
+        "median": 0.55675730667948,
+        "upperQuartile": 0.55782028395085,
+        "max": 0.5700738550188645
+      },
+      {
+        "category": "District 14",
+        "min": 0.5468989128698338,
+        "lowerQuartile": 0.55782028395085,
+        "median": 0.55782028395085,
+        "upperQuartile": 0.60066304244209,
+        "max": 0.6212958372565467
+      },
+      {
+        "category": "District 15",
+        "min": 0.55782028395085,
+        "lowerQuartile": 0.60923032722315,
+        "median": 0.66414126292682,
+        "upperQuartile": 0.6776133468022,
+        "max": 0.6890607811083572
+      },
+      {
+        "category": "District 16",
+        "min": 0.6599043602921457,
+        "lowerQuartile": 0.67694032694169,
+        "median": 0.70131197226717,
+        "upperQuartile": 0.7164031002129,
+        "max": 0.7164031002129045
+      },
+      {
+        "category": "District 17",
+        "min": 0.7021089547838378,
+        "lowerQuartile": 0.70452000359979,
+        "median": 0.85000117103471,
+        "upperQuartile": 0.87269499246474,
+        "max": 0.87856689459372
+      },
+      {
+        "category": "District 18",
+        "min": 0.872694992464739,
+        "lowerQuartile": 0.87691312359489,
+        "median": 0.884391851941,
+        "upperQuartile": 0.90585280511725,
+        "max": 0.9132545473358428
+      }
+    ]
+  }
+}]

@@ -88,17 +88,16 @@ const Table = () => {
               </thead>
               <tbody>
                 {data
-                  .filter(
-                    (district) => showIncumbentsOnly || district.incumbent
+                  .filter((district) =>
+                    showIncumbentsOnly ? district.incumbent : true
                   )
                   .slice(currentPage * pageSize, (currentPage + 1) * pageSize)
                   .map((district, key) => {
                     let color = district.party === "DEM" ? "blue" : "red";
-
                     let isHighlighted =
                       store.currentDistrict ===
                       parseInt(district.districtNumber);
-                    return district.incumbent ? (
+                    return (
                       <tr
                         key={key}
                         onClick={() =>
@@ -109,7 +108,11 @@ const Table = () => {
                         }}
                       >
                         <td>{district.districtNumber}</td>
-                        <td>{district.incumbent}</td>
+                        <td>
+                          {district.incumbent
+                            ? district.incumbent
+                            : district.winner}
+                        </td>
                         <td style={{ color: color }}>
                           {district.party === "REP" ? "Rep" : "Dem"}
                         </td>
@@ -118,11 +121,10 @@ const Table = () => {
                             ? "Won"
                             : "Lost"}
                         </td>
-
                         <td>{district.geographicVariation}</td>
                         <td>{district.populationVariation}</td>
                       </tr>
-                    ) : null;
+                    );
                   })}
               </tbody>
             </table>
